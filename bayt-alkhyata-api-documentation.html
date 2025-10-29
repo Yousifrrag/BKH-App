@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayt AlKhyata - API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff8c00, #ff6600);
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(255, 140, 0, 0.3);
+            border-radius: 15px;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: white;
+            margin: 15px 0 0 0;
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        .nav {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(255,140,0,0.15);
+            border: 2px solid #ff8c00;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            background: #ff8c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,140,0,0.3);
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            background: #ff6600;
+            box-shadow: 0 8px 25px rgba(255,140,0,0.4);
+        }
+
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-right: 12px;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        .section h2 {
+            color: #2d3748;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 3px solid #ff8c00;
+            padding-bottom: 15px;
+        }
+
+        .section h2 i {
+            color: #ff8c00;
+        }
+
+        .section h3 {
+            color: #4a5568;
+            font-size: 1.6rem;
+            margin: 30px 0 20px 0;
+            padding: 15px 0;
+            border-left: 4px solid #ff8c00;
+            padding-left: 20px;
+            background: #fff5e6;
+            border-radius: 8px;
+        }
+
+        .api-endpoint {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .api-endpoint h4 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .method-post { background: #48bb78; color: white; }
+        .method-get { background: #4299e1; color: white; }
+        .method-put { background: #ed8936; color: white; }
+        .method-delete { background: #f56565; color: white; }
+
+        .endpoint-url {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            margin: 10px 0;
+            border-left: 4px solid #ff8c00;
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 4px solid #ff8c00;
+        }
+
+        .json-key { color: #63b3ed; }
+        .json-string { color: #68d391; }
+        .json-number { color: #fbb6ce; }
+        .json-boolean { color: #f6ad55; }
+
+        .info-box {
+            background: #fff5e6;
+            border: 1px solid #ff8c00;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .info-box h5 {
+            color: #ff6600;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin: 8px 0;
+            color: #4a5568;
+        }
+
+        .error-codes {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .error-codes h5 {
+            color: #c53030;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .error-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 8px 0;
+            border-left: 4px solid #fc8181;
+        }
+
+        .error-code {
+            font-weight: 600;
+            color: #c53030;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .overview-card {
+            background: #fff5e6;
+            border: 2px solid #ff8c00;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .overview-card i {
+            font-size: 3rem;
+            color: #ff8c00;
+            margin-bottom: 15px;
+        }
+
+        .overview-card h4 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .overview-card p {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-badge {
+            background: #ff8c00;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #ff8c00, #ff6600);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-radius: 15px;
+        }
+
+        .footer p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2rem; }
+            .section { padding: 25px; }
+            .section h2 { font-size: 1.8rem; }
+            .nav-grid { grid-template-columns: 1fr; }
+            .overview-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Print styles for PDF compatibility */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            body {
+                background: white !important;
+                color: #333 !important;
+            }
+            
+            .header {
+                position: static !important;
+                page-break-inside: avoid;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+            }
+            
+            .api-endpoint {
+                page-break-inside: avoid;
+                margin-bottom: 15px !important;
+            }
+            
+            .code-block {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> Bayt AlKhyata API Documentation</h1>
+            <p>Complete REST API Specification for Mobile App Integration with Odoo ERP v18</p>
+        </header>
+
+        <nav class="nav">
+            <div class="nav-grid">
+                <a href="#overview" class="nav-item">
+                    <i class="fas fa-info-circle"></i>
+                    <span>System Overview</span>
+                </a>
+                <a href="#authentication" class="nav-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Authentication APIs</span>
+                </a>
+                <a href="#elearning" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>E-Learning APIs</span>
+                </a>
+                <a href="#ecommerce" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>E-Commerce APIs</span>
+                </a>
+                <a href="#rewards" class="nav-item">
+                    <i class="fas fa-gift"></i>
+                    <span>Points & Rewards APIs</span>
+                </a>
+                <a href="#community" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Community APIs</span>
+                </a>
+                <a href="#reels" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>Reels APIs</span>
+                </a>
+                <a href="#static" class="nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Static Content APIs</span>
+                </a>
+            </div>
+        </nav>
+
+        <section id="overview" class="section">
+            <h2><i class="fas fa-info-circle"></i> System Overview</h2>
+            
+            <p style="font-size: 1.1rem; margin-bottom: 25px; color: #4a5568;">
+                The Bayt AlKhyata mobile application integrates with Odoo ERP v18 through a comprehensive REST API system. 
+                This documentation provides complete specifications for all endpoints, authentication methods, and data structures 
+                required for seamless mobile-to-backend communication.
+            </p>
+
+            <div class="overview-grid">
+                <div class="overview-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4>Mobile-First Design</h4>
+                    <p>Optimized for mobile app consumption with efficient data structures and minimal payload sizes.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Secure Authentication</h4>
+                    <p>OTP-based registration and JWT token authentication for secure user sessions.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>Real-time Sync</h4>
+                    <p>Seamless data synchronization between mobile app and Odoo backend systems.</p>
+                </div>
+                <div class="overview-card">
+                    <i class="fas fa-cogs"></i>
+                    <h4>Modular Architecture</h4>
+                    <p>Clean separation of concerns with dedicated endpoints for each app module.</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h5><i class="fas fa-server"></i> Technical Requirements</h5>
+                <ul>
+                    <li><strong>Odoo Version:</strong> v18 Community/Enterprise Edition</li>
+                    <li><strong>Protocol:</strong> HTTPS only (TLS 1.2+)</li>
+                    <li><strong>Authentication:</strong> JWT tokens with refresh mechanism</li>
+                    <li><strong>Data Format:</strong> JSON request/response bodies</li>
+                    <li><strong>Rate Limiting:</strong> 1000 requests per hour per user</li>
+                    <li><strong>API Versioning:</strong> /api/v1/ prefix for all endpoints</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h5><i class="fas fa-database"></i> Core Odoo Modules Integration</h5>
+                <ul>
+                    <li><strong>res.users & res.partner:</strong> User management and authentication</li>
+                    <li><strong>website_sale:</strong> E-commerce functionality and product catalog</li>
+                    <li><strong>website_slides (eLearning):</strong> Course management and progress tracking</li>
+                    <li><strong>website_blog:</strong> Community posts and discussions</li>
+                    <li><strong>stock:</strong> Inventory management and product availability</li>
+                    <li><strong>payment:</strong> Payment processing and transaction handling</li>
+                    <li><strong>loyalty:</strong> Points system and referral management</li>
+                </ul>
+            </div>
+
+            <h3>Standard Response Format</h3>
+            <p>All API responses follow a consistent structure:</p>
+            <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Operation completed successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    // Response payload
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"version"</span>: <span class="json-string">"v1"</span>,
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"limit"</span>: <span class="json-number">20</span>,
+      <span class="json-key">"total"</span>: <span class="json-number">150</span>
+    }
+  }
+}
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Odoo v18</span>
+                <span class="tech-badge">REST API</span>
+                <span class="tech-badge">JWT Authentication</span>
+                <span class="tech-badge">JSON</span>
+                <span class="tech-badge">HTTPS</span>
+                <span class="tech-badge">OTP Verification</span>
+            </div>
+        </section>
+
+        <section id="elearning" class="section">
+            <h2><i class="fas fa-graduation-cap"></i> E-Learning Module APIs</h2>
+            
+            <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                Comprehensive e-learning system with courses, quizzes, certifications, and progress tracking integrated with Odoo eLearning module.
+            </p>
+
+            <!-- Get All Courses API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get All Courses
+                </h4>
+                <div class="endpoint-url">/api/v1/courses</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve all available courses with filtering, pagination, and sorting. Shows free courses first, then paid courses based on user access.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?category=sewing&level=beginner&price=free&page=1&limit=10&sort=popularity
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"courses"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Learn fundamental sewing skills"</span>,
+        <span class="json-key">"thumbnail"</span>: <span class="json-string">"/web/image/slide.channel/1/image_1920"</span>,
+        <span class="json-key">"instructor"</span>: <span class="json-string">"Master Tailor Ahmed"</span>,
+        <span class="json-key">"duration"</span>: <span class="json-string">"4 hours"</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"sewing"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">0.00</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"EGP"</span>,
+        <span class="json-key">"rating"</span>: <span class="json-number">4.8</span>,
+        <span class="json-key">"students_count"</span>: <span class="json-number">1250</span>,
+        <span class="json-key">"lessons_count"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"is_enrolled"</span>: <span class="json-boolean">false</span>,
+        <span class="json-key">"is_completed"</span>: <span class="json-boolean">false</span>,
+        <span class="json-key">"progress_percentage"</span>: <span class="json-number">0</span>
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">5</span>,
+      <span class="json-key">"total_courses"</span>: <span class="json-number">48</span>,
+      <span class="json-key">"per_page"</span>: <span class="json-number">10</span>
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> slide.channel, slide.slide, product.template</li>
+                        <li><strong>Access Control:</strong> Check user enrollment and payment status</li>
+                        <li><strong>Filtering:</strong> By category, level, price, instructor</li>
+                        <li><strong>Sorting:</strong> popularity, rating, price, newest</li>
+                        <li><strong>Free First:</strong> Display free courses before paid ones</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Get Course Details API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Course Details
+                </h4>
+                <div class="endpoint-url">/api/v1/courses/{id}</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Get detailed information about a specific course including lessons, quizzes, and enrollment status.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"course"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Complete course description..."</span>,
+      <span class="json-key">"instructor"</span>: {
+        <span class="json-key">"name"</span>: <span class="json-string">"Master Tailor Ahmed"</span>,
+        <span class="json-key">"bio"</span>: <span class="json-string">"20+ years experience"</span>,
+        <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/5/image_128"</span>
+      },
+      <span class="json-key">"price"</span>: <span class="json-number">0.00</span>,
+      <span class="json-key">"duration"</span>: <span class="json-string">"4 hours"</span>,
+      <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+      <span class="json-key">"requirements"</span>: [<span class="json-string">"Basic sewing machine"</span>, <span class="json-string">"Fabric samples"</span>],
+      <span class="json-key">"what_you_learn"</span>: [<span class="json-string">"Basic stitches"</span>, <span class="json-string">"Pattern reading"</span>],
+      <span class="json-key">"lessons"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+          <span class="json-key">"title"</span>: <span class="json-string">"Introduction to Sewing"</span>,
+          <span class="json-key">"type"</span>: <span class="json-string">"video"</span>,
+          <span class="json-key">"duration"</span>: <span class="json-string">"15 min"</span>,
+          <span class="json-key">"is_preview"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"is_completed"</span>: <span class="json-boolean">false</span>
+        }
+      ],
+      <span class="json-key">"quizzes"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+          <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Quiz"</span>,
+          <span class="json-key">"questions_count"</span>: <span class="json-number">10</span>,
+          <span class="json-key">"passing_score"</span>: <span class="json-number">70</span>
+        }
+      ],
+      <span class="json-key">"is_enrolled"</span>: <span class="json-boolean">false</span>,
+      <span class="json-key">"enrollment_count"</span>: <span class="json-number">1250</span>,
+      <span class="json-key">"rating"</span>: <span class="json-number">4.8</span>,
+      <span class="json-key">"reviews_count"</span>: <span class="json-number">89</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Enroll in Course API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Enroll in Course
+                </h4>
+                <div class="endpoint-url">/api/v1/courses/enroll</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Enroll user in a course. For paid courses, validates payment or processes purchase. For free courses, grants immediate access.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"course_id"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"payment_method"</span>: <span class="json-string">"points"</span>,
+  <span class="json-key">"coupon_code"</span>: <span class="json-string">"SAVE20"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Successfully enrolled in course"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"enrollment_id"</span>: <span class="json-number">123</span>,
+    <span class="json-key">"course_id"</span>: <span class="json-number">1</span>,
+    <span class="json-key">"enrolled_date"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"access_expires"</span>: <span class="json-string">"2025-01-15T10:30:00Z"</span>,
+    <span class="json-key">"points_used"</span>: <span class="json-number">500</span>,
+    <span class="json-key">"remaining_points"</span>: <span class="json-number">750</span>
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> slide.channel.partner, sale.order, loyalty.program</li>
+                        <li><strong>Payment Processing:</strong> Handle points redemption or payment gateway</li>
+                        <li><strong>Access Control:</strong> Grant course access permissions</li>
+                        <li><strong>Notifications:</strong> Send enrollment confirmation email/SMS</li>
+                        <li><strong>Analytics:</strong> Track enrollment metrics and conversion rates</li>
+                    </ul>
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">ALREADY_ENROLLED (409)</span>: User already enrolled in this course
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INSUFFICIENT_POINTS (400)</span>: Not enough points for purchase
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_COUPON (400)</span>: Coupon code is invalid or expired
+                    </div>
+                </div>
+            </div>
+
+            <!-- Get Course Quiz API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Course Quiz
+                </h4>
+                <div class="endpoint-url">/api/v1/courses/{id}/quiz</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve quiz questions for a specific course. Only accessible to enrolled users.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"quiz"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Quiz"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Test your basic sewing knowledge"</span>,
+      <span class="json-key">"time_limit"</span>: <span class="json-number">1800</span>,
+      <span class="json-key">"passing_score"</span>: <span class="json-number">70</span>,
+      <span class="json-key">"attempts_allowed"</span>: <span class="json-number">3</span>,
+      <span class="json-key">"questions"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+          <span class="json-key">"question"</span>: <span class="json-string">"What is the most basic stitch in sewing?"</span>,
+          <span class="json-key">"type"</span>: <span class="json-string">"multiple_choice"</span>,
+          <span class="json-key">"options"</span>: [
+            {<span class="json-key">"id"</span>: <span class="json-string">"a"</span>, <span class="json-key">"text"</span>: <span class="json-string">"Running stitch"</span>},
+            {<span class="json-key">"id"</span>: <span class="json-string">"b"</span>, <span class="json-key">"text"</span>: <span class="json-string">"Back stitch"</span>},
+            {<span class="json-key">"id"</span>: <span class="json-string">"c"</span>, <span class="json-key">"text"</span>: <span class="json-string">"Chain stitch"</span>}
+          ],
+          <span class="json-key">"points"</span>: <span class="json-number">10</span>
+        }
+      ]
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Submit Quiz API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Submit Quiz Answers
+                </h4>
+                <div class="endpoint-url">/api/v1/courses/{id}/quiz/submit</div>
+                
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"quiz_id"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"answers"</span>: [
+    {
+      <span class="json-key">"question_id"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"answer"</span>: <span class="json-string">"a"</span>
+    },
+    {
+      <span class="json-key">"question_id"</span>: <span class="json-number">2</span>,
+      <span class="json-key">"answer"</span>: <span class="json-string">"b"</span>
+    }
+  ],
+  <span class="json-key">"time_taken"</span>: <span class="json-number">1200</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"result"</span>: {
+      <span class="json-key">"score"</span>: <span class="json-number">85</span>,
+      <span class="json-key">"percentage"</span>: <span class="json-number">85</span>,
+      <span class="json-key">"passed"</span>: <span class="json-boolean">true</span>,
+      <span class="json-key">"correct_answers"</span>: <span class="json-number">17</span>,
+      <span class="json-key">"total_questions"</span>: <span class="json-number">20</span>,
+      <span class="json-key">"time_taken"</span>: <span class="json-number">1200</span>,
+      <span class="json-key">"attempt_number"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"certificate_earned"</span>: <span class="json-boolean">true</span>,
+      <span class="json-key">"points_earned"</span>: <span class="json-number">50</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Get My Courses API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get My Enrolled Courses
+                </h4>
+                <div class="endpoint-url">/api/v1/courses/my</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve all courses the user is enrolled in with progress tracking and completion status.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?status=in_progress&page=1&limit=10
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"courses"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+        <span class="json-key">"thumbnail"</span>: <span class="json-string">"/web/image/slide.channel/1/image_1920"</span>,
+        <span class="json-key">"instructor"</span>: <span class="json-string">"Master Tailor Ahmed"</span>,
+        <span class="json-key">"enrolled_date"</span>: <span class="json-string">"2024-01-10"</span>,
+        <span class="json-key">"progress_percentage"</span>: <span class="json-number">65</span>,
+        <span class="json-key">"completed_lessons"</span>: <span class="json-number">8</span>,
+        <span class="json-key">"total_lessons"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"last_accessed"</span>: <span class="json-string">"2024-01-14T15:30:00Z"</span>,
+        <span class="json-key">"status"</span>: <span class="json-string">"in_progress"</span>,
+        <span class="json-key">"certificate_earned"</span>: <span class="json-boolean">false</span>,
+        <span class="json-key">"quiz_score"</span>: <span class="json-number">null</span>
+      }
+    ],
+    <span class="json-key">"summary"</span>: {
+      <span class="json-key">"total_enrolled"</span>: <span class="json-number">5</span>,
+      <span class="json-key">"completed"</span>: <span class="json-number">2</span>,
+      <span class="json-key">"in_progress"</span>: <span class="json-number">3</span>,
+      <span class="json-key">"certificates_earned"</span>: <span class="json-number">2</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Get Certifications API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get User Certifications
+                </h4>
+                <div class="endpoint-url">/api/v1/certifications</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve all certificates earned by the user with download links and verification codes.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"certificates"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"course_title"</span>: <span class="json-string">"Advanced Pattern Making"</span>,
+        <span class="json-key">"issued_date"</span>: <span class="json-string">"2024-01-12"</span>,
+        <span class="json-key">"certificate_number"</span>: <span class="json-string">"BK-2024-001234"</span>,
+        <span class="json-key">"verification_code"</span>: <span class="json-string">"VER123456"</span>,
+        <span class="json-key">"download_url"</span>: <span class="json-string">"/api/v1/certificates/1/download"</span>,
+        <span class="json-key">"share_url"</span>: <span class="json-string">"https://baytalkhyata.com/verify/VER123456"</span>,
+        <span class="json-key">"instructor"</span>: <span class="json-string">"Master Tailor Ahmed"</span>,
+        <span class="json-key">"grade"</span>: <span class="json-string">"A"</span>,
+        <span class="json-key">"score"</span>: <span class="json-number">92</span>
+      }
+    ],
+    <span class="json-key">"total_certificates"</span>: <span class="json-number">3</span>
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> slide.channel.partner, survey.user_input</li>
+                        <li><strong>Certificate Generation:</strong> PDF generation with QR codes</li>
+                        <li><strong>Verification System:</strong> Public verification via unique codes</li>
+                        <li><strong>Digital Badges:</strong> Integration with badge systems</li>
+                        <li><strong>Social Sharing:</strong> LinkedIn, Facebook integration</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="ecommerce" class="section">
+            <h2><i class="fas fa-shopping-cart"></i> E-Commerce / Shop APIs</h2>
+            
+            <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                Complete e-commerce functionality with product catalog, shopping cart, checkout process, and order management integrated with Odoo Website Sale and Inventory modules.
+            </p>
+
+            <!-- Get All Products API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get All Products
+                </h4>
+                <div class="endpoint-url">/api/v1/products</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve all available products with real-time inventory, pricing, and filtering options. Includes sewing materials, tools, and accessories.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?category=fabric&brand=singer&min_price=50&max_price=500&in_stock=true&page=1&limit=20&sort=price_asc
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"products"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Premium Cotton Fabric - Blue"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"High-quality 100% cotton fabric perfect for dresses"</span>,
+        <span class="json-key">"sku"</span>: <span class="json-string">"FAB-COT-BLU-001"</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"fabric"</span>,
+        <span class="json-key">"subcategory"</span>: <span class="json-string">"cotton"</span>,
+        <span class="json-key">"brand"</span>: <span class="json-string">"Premium Textiles"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">25.50</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"EGP"</span>,
+        <span class="json-key">"unit"</span>: <span class="json-string">"meter"</span>,
+        <span class="json-key">"images"</span>: [
+          <span class="json-string">"/web/image/product.product/101/image_1920"</span>,
+          <span class="json-string">"/web/image/product.image/201/image_1920"</span>
+        ],
+        <span class="json-key">"stock_quantity"</span>: <span class="json-number">150</span>,
+        <span class="json-key">"is_in_stock"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"low_stock_threshold"</span>: <span class="json-number">10</span>,
+        <span class="json-key">"rating"</span>: <span class="json-number">4.7</span>,
+        <span class="json-key">"reviews_count"</span>: <span class="json-number">23</span>,
+        <span class="json-key">"discount_percentage"</span>: <span class="json-number">0</span>,
+        <span class="json-key">"original_price"</span>: <span class="json-number">25.50</span>,
+        <span class="json-key">"tags"</span>: [<span class="json-string">"cotton"</span>, <span class="json-string">"premium"</span>, <span class="json-string">"blue"</span>],
+        <span class="json-key">"specifications"</span>: {
+          <span class="json-key">"width"</span>: <span class="json-string">"150cm"</span>,
+          <span class="json-key">"weight"</span>: <span class="json-string">"200gsm"</span>,
+          <span class="json-key">"care_instructions"</span>: <span class="json-string">"Machine wash cold"</span>
+        }
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">12</span>,
+      <span class="json-key">"total_products"</span>: <span class="json-number">235</span>,
+      <span class="json-key">"per_page"</span>: <span class="json-number">20</span>
+    },
+    <span class="json-key">"filters"</span>: {
+      <span class="json-key">"categories"</span>: [<span class="json-string">"fabric"</span>, <span class="json-string">"tools"</span>, <span class="json-string">"accessories"</span>],
+      <span class="json-key">"brands"</span>: [<span class="json-string">"Singer"</span>, <span class="json-string">"Brother"</span>, <span class="json-string">"Premium Textiles"</span>],
+      <span class="json-key">"price_range"</span>: {<span class="json-key">"min"</span>: <span class="json-number">5.00</span>, <span class="json-key">"max"</span>: <span class="json-number">2500.00</span>}
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> product.product, product.template, stock.quant</li>
+                        <li><strong>Real-time Inventory:</strong> Live stock quantity from warehouse</li>
+                        <li><strong>Pricing Rules:</strong> Dynamic pricing, discounts, and promotions</li>
+                        <li><strong>Multi-warehouse:</strong> Stock availability across locations</li>
+                        <li><strong>Product Variants:</strong> Size, color, material variations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Get Product Details API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Product Details
+                </h4>
+                <div class="endpoint-url">/api/v1/products/{id}</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Get detailed information about a specific product including variants, reviews, related products, and availability.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"product"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Premium Cotton Fabric - Blue"</span>,
+      <span class="json-key">"full_description"</span>: <span class="json-string">"Detailed product description..."</span>,
+      <span class="json-key">"variants"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1011</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Light Blue"</span>,
+          <span class="json-key">"price"</span>: <span class="json-number">25.50</span>,
+          <span class="json-key">"stock"</span>: <span class="json-number">150</span>,
+          <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.product/1011/image_1920"</span>
+        },
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1012</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Dark Blue"</span>,
+          <span class="json-key">"price"</span>: <span class="json-number">27.00</span>,
+          <span class="json-key">"stock"</span>: <span class="json-number">89</span>,
+          <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.product/1012/image_1920"</span>
+        }
+      ],
+      <span class="json-key">"reviews"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+          <span class="json-key">"user_name"</span>: <span class="json-string">"Fatima A."</span>,
+          <span class="json-key">"rating"</span>: <span class="json-number">5</span>,
+          <span class="json-key">"comment"</span>: <span class="json-string">"Excellent quality fabric, perfect for my dress project"</span>,
+          <span class="json-key">"date"</span>: <span class="json-string">"2024-01-10"</span>,
+          <span class="json-key">"verified_purchase"</span>: <span class="json-boolean">true</span>
+        }
+      ],
+      <span class="json-key">"related_products"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">102</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Matching Thread - Blue"</span>,
+          <span class="json-key">"price"</span>: <span class="json-number">3.50</span>,
+          <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.product/102/image_512"</span>
+        }
+      ],
+      <span class="json-key">"shipping_info"</span>: {
+        <span class="json-key">"weight"</span>: <span class="json-string">"0.5kg per meter"</span>,
+        <span class="json-key">"dimensions"</span>: <span class="json-string">"150cm width"</span>,
+        <span class="json-key">"delivery_time"</span>: <span class="json-string">"2-3 business days"</span>
+      }
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Add to Cart API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Add Product to Cart
+                </h4>
+                <div class="endpoint-url">/api/v1/cart/add</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Add a product to the user's shopping cart with quantity and variant selection. Validates stock availability.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"product_id"</span>: <span class="json-number">101</span>,
+  <span class="json-key">"variant_id"</span>: <span class="json-number">1011</span>,
+  <span class="json-key">"quantity"</span>: <span class="json-number">3</span>,
+  <span class="json-key">"notes"</span>: <span class="json-string">"Please ensure fabric is wrinkle-free"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Product added to cart successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"cart_item_id"</span>: <span class="json-number">456</span>,
+    <span class="json-key">"product_name"</span>: <span class="json-string">"Premium Cotton Fabric - Light Blue"</span>,
+    <span class="json-key">"quantity"</span>: <span class="json-number">3</span>,
+    <span class="json-key">"unit_price"</span>: <span class="json-number">25.50</span>,
+    <span class="json-key">"total_price"</span>: <span class="json-number">76.50</span>,
+    <span class="json-key">"cart_total"</span>: <span class="json-number">156.75</span>,
+    <span class="json-key">"cart_items_count"</span>: <span class="json-number">5</span>
+  }
+}
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">INSUFFICIENT_STOCK (400)</span>: Requested quantity exceeds available stock
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">PRODUCT_UNAVAILABLE (404)</span>: Product is discontinued or not found
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_VARIANT (400)</span>: Selected variant doesn't exist for this product
+                    </div>
+                </div>
+            </div>
+
+            <!-- Get Cart API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    View Shopping Cart
+                </h4>
+                <div class="endpoint-url">/api/v1/cart</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve the user's current shopping cart with all items, pricing, and applicable discounts.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"cart"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">789</span>,
+      <span class="json-key">"items"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">456</span>,
+          <span class="json-key">"product_id"</span>: <span class="json-number">101</span>,
+          <span class="json-key">"product_name"</span>: <span class="json-string">"Premium Cotton Fabric - Light Blue"</span>,
+          <span class="json-key">"variant_name"</span>: <span class="json-string">"Light Blue"</span>,
+          <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.product/1011/image_512"</span>,
+          <span class="json-key">"quantity"</span>: <span class="json-number">3</span>,
+          <span class="json-key">"unit_price"</span>: <span class="json-number">25.50</span>,
+          <span class="json-key">"total_price"</span>: <span class="json-number">76.50</span>,
+          <span class="json-key">"is_available"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"stock_available"</span>: <span class="json-number">150</span>
+        }
+      ],
+      <span class="json-key">"summary"</span>: {
+        <span class="json-key">"subtotal"</span>: <span class="json-number">156.75</span>,
+        <span class="json-key">"discount"</span>: <span class="json-number">15.68</span>,
+        <span class="json-key">"shipping"</span>: <span class="json-number">25.00</span>,
+        <span class="json-key">"tax"</span>: <span class="json-number">23.51</span>,
+        <span class="json-key">"total"</span>: <span class="json-number">189.58</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"EGP"</span>
+      },
+      <span class="json-key">"applied_coupons"</span>: [
+        {
+          <span class="json-key">"code"</span>: <span class="json-string">"SAVE10"</span>,
+          <span class="json-key">"discount_amount"</span>: <span class="json-number">15.68</span>,
+          <span class="json-key">"type"</span>: <span class="json-string">"percentage"</span>
+        }
+      ],
+      <span class="json-key">"points_applicable"</span>: <span class="json-number">189</span>,
+      <span class="json-key">"estimated_delivery"</span>: <span class="json-string">"2024-01-18"</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Checkout Process API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Process Checkout
+                </h4>
+                <div class="endpoint-url">/api/v1/checkout</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Process the complete checkout including payment, shipping address, and order creation. Supports multiple payment methods.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"shipping_address"</span>: {
+    <span class="json-key">"name"</span>: <span class="json-string">"Fatima Ahmed"</span>,
+    <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+    <span class="json-key">"street"</span>: <span class="json-string">"123 Tahrir Square"</span>,
+    <span class="json-key">"city"</span>: <span class="json-string">"Cairo"</span>,
+    <span class="json-key">"state"</span>: <span class="json-string">"Cairo Governorate"</span>,
+    <span class="json-key">"postal_code"</span>: <span class="json-string">"11511"</span>,
+    <span class="json-key">"country"</span>: <span class="json-string">"Egypt"</span>
+  },
+  <span class="json-key">"payment_method"</span>: <span class="json-string">"credit_card"</span>,
+  <span class="json-key">"payment_details"</span>: {
+    <span class="json-key">"card_token"</span>: <span class="json-string">"tok_1234567890abcdef"</span>,
+    <span class="json-key">"save_card"</span>: <span class="json-boolean">false</span>
+  },
+  <span class="json-key">"use_points"</span>: <span class="json-number">100</span>,
+  <span class="json-key">"coupon_code"</span>: <span class="json-string">"SAVE10"</span>,
+  <span class="json-key">"delivery_notes"</span>: <span class="json-string">"Please call before delivery"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Order placed successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"order"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">12345</span>,
+      <span class="json-key">"order_number"</span>: <span class="json-string">"BK-2024-001234"</span>,
+      <span class="json-key">"status"</span>: <span class="json-string">"confirmed"</span>,
+      <span class="json-key">"total_amount"</span>: <span class="json-number">189.58</span>,
+      <span class="json-key">"payment_status"</span>: <span class="json-string">"paid"</span>,
+      <span class="json-key">"estimated_delivery"</span>: <span class="json-string">"2024-01-18"</span>,
+      <span class="json-key">"tracking_number"</span>: <span class="json-string">"TRK123456789"</span>,
+      <span class="json-key">"points_earned"</span>: <span class="json-number">19</span>,
+      <span class="json-key">"points_used"</span>: <span class="json-number">100</span>
+    },
+    <span class="json-key">"payment"</span>: {
+      <span class="json-key">"transaction_id"</span>: <span class="json-string">"txn_1234567890"</span>,
+      <span class="json-key">"method"</span>: <span class="json-string">"credit_card"</span>,
+      <span class="json-key">"last_four"</span>: <span class="json-string">"1234"</span>
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> sale.order, sale.order.line, account.payment</li>
+                        <li><strong>Payment Processing:</strong> Integration with payment gateways</li>
+                        <li><strong>Inventory Management:</strong> Automatic stock reservation and deduction</li>
+                        <li><strong>Order Workflow:</strong> Automated order confirmation and fulfillment</li>
+                        <li><strong>Points System:</strong> Loyalty points earning and redemption</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Get My Orders API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get My Orders History
+                </h4>
+                <div class="endpoint-url">/api/v1/orders/my</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve user's order history with status tracking, delivery information, and reorder functionality.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?status=delivered&page=1&limit=10&date_from=2024-01-01&date_to=2024-01-31
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"orders"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">12345</span>,
+        <span class="json-key">"order_number"</span>: <span class="json-string">"BK-2024-001234"</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+        <span class="json-key">"status"</span>: <span class="json-string">"delivered"</span>,
+        <span class="json-key">"total_amount"</span>: <span class="json-number">189.58</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"EGP"</span>,
+        <span class="json-key">"items_count"</span>: <span class="json-number">3</span>,
+        <span class="json-key">"delivery_date"</span>: <span class="json-string">"2024-01-18"</span>,
+        <span class="json-key">"tracking_number"</span>: <span class="json-string">"TRK123456789"</span>,
+        <span class="json-key">"can_review"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"can_return"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"items"</span>: [
+          {
+            <span class="json-key">"product_name"</span>: <span class="json-string">"Premium Cotton Fabric - Light Blue"</span>,
+            <span class="json-key">"quantity"</span>: <span class="json-number">3</span>,
+            <span class="json-key">"unit_price"</span>: <span class="json-number">25.50</span>,
+            <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.product/1011/image_512"</span>
+          }
+        ]
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">3</span>,
+      <span class="json-key">"total_orders"</span>: <span class="json-number">28</span>
+    },
+    <span class="json-key">"summary"</span>: {
+      <span class="json-key">"total_spent"</span>: <span class="json-number">2456.78</span>,
+      <span class="json-key">"total_orders"</span>: <span class="json-number">28</span>,
+      <span class="json-key">"pending_orders"</span>: <span class="json-number">2</span>
+    }
+  }
+}
+                </div>
+            </div>
+        </section>
+
+        <section id="points-rewards" class="section">
+            <h2><i class="fas fa-gift"></i> Points & Rewards APIs</h2>
+            
+            <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                Comprehensive loyalty and referral system with points earning, redemption, and referral code management integrated with Odoo's custom loyalty modules.
+            </p>
+
+            <!-- Get User Points API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get User Points & Referral Data
+                </h4>
+                <div class="endpoint-url">/api/v1/points</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve user's current points balance, referral statistics, earning history, and available rewards for redemption.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"points"</span>: {
+      <span class="json-key">"current_balance"</span>: <span class="json-number">1250</span>,
+      <span class="json-key">"lifetime_earned"</span>: <span class="json-number">3450</span>,
+      <span class="json-key">"lifetime_redeemed"</span>: <span class="json-number">2200</span>,
+      <span class="json-key">"pending_points"</span>: <span class="json-number">75</span>,
+      <span class="json-key">"expiring_soon"</span>: {
+        <span class="json-key">"amount"</span>: <span class="json-number">150</span>,
+        <span class="json-key">"expiry_date"</span>: <span class="json-string">"2024-02-15"</span>
+      }
+    },
+    <span class="json-key">"referral"</span>: {
+      <span class="json-key">"my_referral_code"</span>: <span class="json-string">"FATIMA2024"</span>,
+      <span class="json-key">"total_referrals"</span>: <span class="json-number">12</span>,
+      <span class="json-key">"successful_referrals"</span>: <span class="json-number">8</span>,
+      <span class="json-key">"referral_earnings"</span>: <span class="json-number">800</span>,
+      <span class="json-key">"referral_bonus_per_signup"</span>: <span class="json-number">100</span>,
+      <span class="json-key">"recent_referrals"</span>: [
+        {
+          <span class="json-key">"user_name"</span>: <span class="json-string">"Aisha M."</span>,
+          <span class="json-key">"signup_date"</span>: <span class="json-string">"2024-01-10"</span>,
+          <span class="json-key">"points_earned"</span>: <span class="json-number">100</span>,
+          <span class="json-key">"status"</span>: <span class="json-string">"completed"</span>
+        }
+      ]
+    },
+    <span class="json-key">"earning_opportunities"</span>: [
+      {
+        <span class="json-key">"action"</span>: <span class="json-string">"course_completion"</span>,
+        <span class="json-key">"points"</span>: <span class="json-number">50</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Complete any course"</span>
+      },
+      {
+        <span class="json-key">"action"</span>: <span class="json-string">"product_review"</span>,
+        <span class="json-key">"points"</span>: <span class="json-number">25</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Write a product review"</span>
+      },
+      {
+        <span class="json-key">"action"</span>: <span class="json-string">"daily_login"</span>,
+        <span class="json-key">"points"</span>: <span class="json-number">5</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Daily app login"</span>
+      }
+    ],
+    <span class="json-key">"recent_transactions"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1001</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"earned"</span>,
+        <span class="json-key">"amount"</span>: <span class="json-number">50</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Course completion: Basic Sewing Techniques"</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-12T14:30:00Z"</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1002</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"redeemed"</span>,
+        <span class="json-key">"amount"</span>: <span class="json-number">-200</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Discount on Premium Cotton Fabric"</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-10T09:15:00Z"</span>
+      }
+    ]
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> loyalty.program, loyalty.card, loyalty.rule</li>
+                        <li><strong>Points Calculation:</strong> Automated earning rules based on user actions</li>
+                        <li><strong>Referral Tracking:</strong> Custom referral model with tracking</li>
+                        <li><strong>Expiry Management:</strong> Automatic points expiration handling</li>
+                        <li><strong>Transaction History:</strong> Complete audit trail of points activities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Redeem Points API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Redeem Points for Discount
+                </h4>
+                <div class="endpoint-url">/api/v1/points/redeem</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Apply points as discount during course enrollment or product purchase. Validates point balance and redemption rules.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"points_to_redeem"</span>: <span class="json-number">200</span>,
+  <span class="json-key">"redemption_type"</span>: <span class="json-string">"product_purchase"</span>,
+  <span class="json-key">"target_id"</span>: <span class="json-number">101</span>,
+  <span class="json-key">"order_total"</span>: <span class="json-number">189.58</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Points redeemed successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"redemption"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">5001</span>,
+      <span class="json-key">"points_redeemed"</span>: <span class="json-number">200</span>,
+      <span class="json-key">"discount_amount"</span>: <span class="json-number">20.00</span>,
+      <span class="json-key">"conversion_rate"</span>: <span class="json-string">"10 points = 1 EGP"</span>,
+      <span class="json-key">"coupon_code"</span>: <span class="json-string">"POINTS200-ABC123"</span>,
+      <span class="json-key">"valid_until"</span>: <span class="json-string">"2024-01-20T23:59:59Z"</span>,
+      <span class="json-key">"applicable_to"</span>: <span class="json-string">"Premium Cotton Fabric - Blue"</span>
+    },
+    <span class="json-key">"updated_balance"</span>: {
+      <span class="json-key">"previous_balance"</span>: <span class="json-number">1250</span>,
+      <span class="json-key">"current_balance"</span>: <span class="json-number">1050</span>,
+      <span class="json-key">"points_redeemed"</span>: <span class="json-number">200</span>
+    }
+  }
+}
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">INSUFFICIENT_POINTS (400)</span>: User doesn't have enough points for redemption
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">MINIMUM_REDEMPTION (400)</span>: Points amount below minimum redemption threshold
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_TARGET (404)</span>: Product or course not found for redemption
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">REDEMPTION_LIMIT (429)</span>: Daily/monthly redemption limit exceeded
+                    </div>
+                </div>
+            </div>
+
+            <!-- Apply Referral Code API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Apply Referral Code
+                </h4>
+                <div class="endpoint-url">/api/v1/referral/use</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Apply a referral code during user registration to award bonus points to both referrer and new user.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"referral_code"</span>: <span class="json-string">"FATIMA2024"</span>,
+  <span class="json-key">"new_user_phone"</span>: <span class="json-string">"+201987654321"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Referral code applied successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"referral"</span>: {
+      <span class="json-key">"referrer_name"</span>: <span class="json-string">"Fatima Ahmed"</span>,
+      <span class="json-key">"referrer_bonus"</span>: <span class="json-number">100</span>,
+      <span class="json-key">"new_user_bonus"</span>: <span class="json-number">50</span>,
+      <span class="json-key">"bonus_description"</span>: <span class="json-string">"Welcome bonus for joining through referral"</span>
+    },
+    <span class="json-key">"rewards"</span>: {
+      <span class="json-key">"immediate_points"</span>: <span class="json-number">50</span>,
+      <span class="json-key">"pending_points"</span>: <span class="json-number">0</span>,
+      <span class="json-key">"special_offers"</span>: [
+        {
+          <span class="json-key">"type"</span>: <span class="json-string">"first_course_discount"</span>,
+          <span class="json-key">"discount_percentage"</span>: <span class="json-number">20</span>,
+          <span class="json-key">"valid_until"</span>: <span class="json-string">"2024-02-15"</span>
+        }
+      ]
+    }
+  }
+}
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_REFERRAL_CODE (404)</span>: Referral code doesn't exist or expired
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">SELF_REFERRAL (400)</span>: User cannot use their own referral code
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">ALREADY_REFERRED (409)</span>: User has already used a referral code
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">REFERRAL_LIMIT (429)</span>: Referrer has reached maximum referral limit
+                    </div>
+                </div>
+            </div>
+
+            <!-- Get Available Rewards API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Available Rewards Catalog
+                </h4>
+                <div class="endpoint-url">/api/v1/rewards</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve all available rewards that users can redeem with their points, including courses, products, and special offers.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?category=courses&min_points=100&max_points=500&available_only=true
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"rewards"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">201</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"course_discount"</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"50% Off Advanced Pattern Making"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Get 50% discount on our premium pattern making course"</span>,
+        <span class="json-key">"points_required"</span>: <span class="json-number">300</span>,
+        <span class="json-key">"original_price"</span>: <span class="json-number">199.99</span>,
+        <span class="json-key">"discounted_price"</span>: <span class="json-number">99.99</span>,
+        <span class="json-key">"image"</span>: <span class="json-string">"/web/image/loyalty.reward/201/image_512"</span>,
+        <span class="json-key">"validity_days"</span>: <span class="json-number">30</span>,
+        <span class="json-key">"stock_available"</span>: <span class="json-number">25</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"courses"</span>,
+        <span class="json-key">"is_featured"</span>: <span class="json-boolean">true</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">202</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"product_discount"</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Free Shipping on Next Order"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Get free shipping on your next fabric order"</span>,
+        <span class="json-key">"points_required"</span>: <span class="json-number">150</span>,
+        <span class="json-key">"discount_amount"</span>: <span class="json-number">25.00</span>,
+        <span class="json-key">"minimum_order"</span>: <span class="json-number">100.00</span>,
+        <span class="json-key">"image"</span>: <span class="json-string">"/web/image/loyalty.reward/202/image_512"</span>,
+        <span class="json-key">"validity_days"</span>: <span class="json-number">15</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"shipping"</span>,
+        <span class="json-key">"is_featured"</span>: <span class="json-boolean">false</span>
+      }
+    ],
+    <span class="json-key">"categories"</span>: [
+      <span class="json-string">"courses"</span>,
+      <span class="json-string">"products"</span>,
+      <span class="json-string">"shipping"</span>,
+      <span class="json-string">"exclusive"</span>
+    ],
+    <span class="json-key">"user_points"</span>: <span class="json-number">1250</span>
+  }
+}
+                </div>
+            </div>
+
+            <!-- Points Transaction History API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Points Transaction History
+                </h4>
+                <div class="endpoint-url">/api/v1/points/history</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve detailed history of all points transactions including earning, redemption, and expiration events.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?type=earned&date_from=2024-01-01&date_to=2024-01-31&page=1&limit=20
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"transactions"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1001</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"earned"</span>,
+        <span class="json-key">"amount"</span>: <span class="json-number">50</span>,
+        <span class="json-key">"source"</span>: <span class="json-string">"course_completion"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Completed: Basic Sewing Techniques"</span>,
+        <span class="json-key">"reference_id"</span>: <span class="json-number">301</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-12T14:30:00Z"</span>,
+        <span class="json-key">"expiry_date"</span>: <span class="json-string">"2025-01-12"</span>,
+        <span class="json-key">"status"</span>: <span class="json-string">"active"</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1002</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"redeemed"</span>,
+        <span class="json-key">"amount"</span>: <span class="json-number">-200</span>,
+        <span class="json-key">"source"</span>: <span class="json-string">"product_discount"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"20 EGP discount on Premium Cotton Fabric"</span>,
+        <span class="json-key">"reference_id"</span>: <span class="json-number">12345</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-10T09:15:00Z"</span>,
+        <span class="json-key">"status"</span>: <span class="json-string">"used"</span>
+      }
+    ],
+    <span class="json-key">"summary"</span>: {
+      <span class="json-key">"total_earned_period"</span>: <span class="json-number">450</span>,
+      <span class="json-key">"total_redeemed_period"</span>: <span class="json-number">300</span>,
+      <span class="json-key">"net_change"</span>: <span class="json-number">150</span>
+    },
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">5</span>,
+      <span class="json-key">"total_transactions"</span>: <span class="json-number">87</span>
+    }
+  }
+}
+                </div>
+            </div>
+        </section>
+
+        <section id="community-reels" class="section">
+            <h2><i class="fas fa-users"></i> Community/Blog & Reels APIs</h2>
+            
+            <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                Social engagement features including community posts, blog articles, comments, and short video reels with interaction capabilities integrated with Odoo's website and forum modules.
+            </p>
+
+            <!-- Get Community Posts API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Community Posts & Discussions
+                </h4>
+                <div class="endpoint-url">/api/v1/community</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve community posts, blog articles, and forum discussions with pagination, filtering, and user interaction data.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?type=posts&category=sewing_tips&sort=latest&page=1&limit=10&user_id=123
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"posts"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">501</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"blog_post"</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"10 Essential Sewing Tips for Beginners"</span>,
+        <span class="json-key">"content"</span>: <span class="json-string">"Starting your sewing journey can be exciting but overwhelming..."</span>,
+        <span class="json-key">"excerpt"</span>: <span class="json-string">"Learn the fundamental techniques every beginner should know"</span>,
+        <span class="json-key">"author"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">45</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Fatima Ahmed"</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/45/avatar_128"</span>,
+          <span class="json-key">"is_expert"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"badge"</span>: <span class="json-string">"Master Tailor"</span>
+        },
+        <span class="json-key">"category"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">10</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Sewing Tips"</span>,
+          <span class="json-key">"color"</span>: <span class="json-string">"#FF6B35"</span>
+        },
+        <span class="json-key">"featured_image"</span>: <span class="json-string">"/web/image/blog.post/501/image_1920"</span>,
+        <span class="json-key">"published_date"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+        <span class="json-key">"updated_date"</span>: <span class="json-string">"2024-01-15T14:20:00Z"</span>,
+        <span class="json-key">"stats"</span>: {
+          <span class="json-key">"views"</span>: <span class="json-number">1250</span>,
+          <span class="json-key">"likes"</span>: <span class="json-number">89</span>,
+          <span class="json-key">"comments"</span>: <span class="json-number">23</span>,
+          <span class="json-key">"shares"</span>: <span class="json-number">15</span>
+        },
+        <span class="json-key">"user_interaction"</span>: {
+          <span class="json-key">"liked"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"bookmarked"</span>: <span class="json-boolean">false</span>,
+          <span class="json-key">"commented"</span>: <span class="json-boolean">true</span>
+        },
+        <span class="json-key">"tags"</span>: [<span class="json-string">"beginner"</span>, <span class="json-string">"tips"</span>, <span class="json-string">"tutorial"</span>],
+        <span class="json-key">"reading_time"</span>: <span class="json-number">5</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">502</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"forum_discussion"</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Help with Pattern Adjustments"</span>,
+        <span class="json-key">"content"</span>: <span class="json-string">"I'm having trouble adjusting this dress pattern for my measurements..."</span>,
+        <span class="json-key">"author"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">78</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Aisha M."</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/78/avatar_128"</span>,
+          <span class="json-key">"is_expert"</span>: <span class="json-boolean">false</span>
+        },
+        <span class="json-key">"category"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">12</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Pattern Help"</span>,
+          <span class="json-key">"color"</span>: <span class="json-string">"#4ECDC4"</span>
+        },
+        <span class="json-key">"published_date"</span>: <span class="json-string">"2024-01-14T16:45:00Z"</span>,
+        <span class="json-key">"stats"</span>: {
+          <span class="json-key">"views"</span>: <span class="json-number">156</span>,
+          <span class="json-key">"likes"</span>: <span class="json-number">12</span>,
+          <span class="json-key">"comments"</span>: <span class="json-number">8</span>,
+          <span class="json-key">"shares"</span>: <span class="json-number">2</span>
+        },
+        <span class="json-key">"status"</span>: <span class="json-string">"open"</span>,
+        <span class="json-key">"priority"</span>: <span class="json-string">"normal"</span>
+      }
+    ],
+    <span class="json-key">"categories"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">10</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Sewing Tips"</span>,
+        <span class="json-key">"post_count"</span>: <span class="json-number">45</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">11</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Pattern Reviews"</span>,
+        <span class="json-key">"post_count"</span>: <span class="json-number">32</span>
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">8</span>,
+      <span class="json-key">"total_posts"</span>: <span class="json-number">156</span>
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> blog.post, forum.post, forum.forum, website.page</li>
+                        <li><strong>Content Management:</strong> Rich text editor with media support</li>
+                        <li><strong>User Permissions:</strong> Role-based content creation and moderation</li>
+                        <li><strong>SEO Optimization:</strong> Meta tags and URL optimization</li>
+                        <li><strong>Analytics:</strong> View tracking and engagement metrics</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Create Community Post API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Create Community Post
+                </h4>
+                <div class="endpoint-url">/api/v1/community/post</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Create a new blog post or forum discussion with rich content, media attachments, and category assignment.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"type"</span>: <span class="json-string">"blog_post"</span>,
+  <span class="json-key">"title"</span>: <span class="json-string">"My First Handmade Dress Journey"</span>,
+  <span class="json-key">"content"</span>: <span class="json-string">"&lt;p&gt;Today I want to share my experience creating my first handmade dress...&lt;/p&gt;"</span>,
+  <span class="json-key">"excerpt"</span>: <span class="json-string">"A beginner's journey into dressmaking"</span>,
+  <span class="json-key">"category_id"</span>: <span class="json-number">10</span>,
+  <span class="json-key">"tags"</span>: [<span class="json-string">"beginner"</span>, <span class="json-string">"dress"</span>, <span class="json-string">"journey"</span>],
+  <span class="json-key">"featured_image"</span>: <span class="json-string">"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."</span>,
+  <span class="json-key">"publish_immediately"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"allow_comments"</span>: <span class="json-boolean">true</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Post created successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"post"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">503</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"My First Handmade Dress Journey"</span>,
+      <span class="json-key">"slug"</span>: <span class="json-string">"my-first-handmade-dress-journey"</span>,
+      <span class="json-key">"url"</span>: <span class="json-string">"/blog/sewing-tips/my-first-handmade-dress-journey-503"</span>,
+      <span class="json-key">"status"</span>: <span class="json-string">"published"</span>,
+      <span class="json-key">"published_date"</span>: <span class="json-string">"2024-01-16T09:30:00Z"</span>,
+      <span class="json-key">"author_id"</span>: <span class="json-number">123</span>,
+      <span class="json-key">"category_id"</span>: <span class="json-number">10</span>,
+      <span class="json-key">"featured_image_url"</span>: <span class="json-string">"/web/image/blog.post/503/image_1920"</span>
+    },
+    <span class="json-key">"moderation"</span>: {
+      <span class="json-key">"requires_approval"</span>: <span class="json-boolean">false</span>,
+      <span class="json-key">"auto_published"</span>: <span class="json-boolean">true</span>
+    }
+  }
+}
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">CONTENT_TOO_SHORT (400)</span>: Post content below minimum length requirement
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_CATEGORY (404)</span>: Category ID doesn't exist or user lacks permission
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">DUPLICATE_TITLE (409)</span>: Post with similar title already exists
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">POSTING_LIMIT (429)</span>: User has exceeded daily posting limit
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Comment API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Add Comment to Post
+                </h4>
+                <div class="endpoint-url">/api/v1/community/comment</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Add a comment to a blog post or forum discussion with support for replies, mentions, and media attachments.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"post_id"</span>: <span class="json-number">501</span>,
+  <span class="json-key">"content"</span>: <span class="json-string">"Great tips! I especially found the seam finishing techniques helpful."</span>,
+  <span class="json-key">"parent_comment_id"</span>: <span class="json-number">null</span>,
+  <span class="json-key">"mentions"</span>: [<span class="json-number">45</span>],
+  <span class="json-key">"attachments"</span>: [
+    {
+      <span class="json-key">"type"</span>: <span class="json-string">"image"</span>,
+      <span class="json-key">"data"</span>: <span class="json-string">"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ..."</span>,
+      <span class="json-key">"filename"</span>: <span class="json-string">"my_seam_example.jpg"</span>
+    }
+  ]
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Comment added successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"comment"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">1501</span>,
+      <span class="json-key">"content"</span>: <span class="json-string">"Great tips! I especially found the seam finishing techniques helpful."</span>,
+      <span class="json-key">"author"</span>: {
+        <span class="json-key">"id"</span>: <span class="json-number">123</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Sara Ahmed"</span>,
+        <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/123/avatar_128"</span>
+      },
+      <span class="json-key">"created_date"</span>: <span class="json-string">"2024-01-16T11:15:00Z"</span>,
+      <span class="json-key">"likes"</span>: <span class="json-number">0</span>,
+      <span class="json-key">"replies_count"</span>: <span class="json-number">0</span>,
+      <span class="json-key">"attachments"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">2001</span>,
+          <span class="json-key">"type"</span>: <span class="json-string">"image"</span>,
+          <span class="json-key">"url"</span>: <span class="json-string">"/web/image/ir.attachment/2001/datas"</span>,
+          <span class="json-key">"filename"</span>: <span class="json-string">"my_seam_example.jpg"</span>
+        }
+      ]
+    },
+    <span class="json-key">"notifications"</span>: {
+      <span class="json-key">"mentions_sent"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"author_notified"</span>: <span class="json-boolean">true</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Get Reels API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get Reels Feed
+                </h4>
+                <div class="endpoint-url">/api/v1/reels</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve short video reels with pagination, user interactions, and personalized recommendations based on user preferences.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                <div class="code-block">
+?category=tutorials&duration=short&page=1&limit=20&for_you=true
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"reels"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">301</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Quick Buttonhole Technique"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Learn this professional buttonhole technique in 60 seconds!"</span>,
+        <span class="json-key">"video_url"</span>: <span class="json-string">"/web/content/reels.video/301/video_file"</span>,
+        <span class="json-key">"thumbnail_url"</span>: <span class="json-string">"/web/image/reels.video/301/thumbnail"</span>,
+        <span class="json-key">"duration"</span>: <span class="json-number">58</span>,
+        <span class="json-key">"creator"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">45</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Fatima Ahmed"</span>,
+          <span class="json-key">"username"</span>: <span class="json-string">"@fatima_sews"</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/45/avatar_128"</span>,
+          <span class="json-key">"is_verified"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"follower_count"</span>: <span class="json-number">15420</span>
+        },
+        <span class="json-key">"category"</span>: <span class="json-string">"tutorials"</span>,
+        <span class="json-key">"tags"</span>: [<span class="json-string">"buttonhole"</span>, <span class="json-string">"technique"</span>, <span class="json-string">"quick"</span>],
+        <span class="json-key">"created_date"</span>: <span class="json-string">"2024-01-15T14:20:00Z"</span>,
+        <span class="json-key">"stats"</span>: {
+          <span class="json-key">"views"</span>: <span class="json-number">8750</span>,
+          <span class="json-key">"likes"</span>: <span class="json-number">342</span>,
+          <span class="json-key">"comments"</span>: <span class="json-number">28</span>,
+          <span class="json-key">"shares"</span>: <span class="json-number">45</span>,
+          <span class="json-key">"saves"</span>: <span class="json-number">156</span>
+        },
+        <span class="json-key">"user_interaction"</span>: {
+          <span class="json-key">"liked"</span>: <span class="json-boolean">false</span>,
+          <span class="json-key">"saved"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"following_creator"</span>: <span class="json-boolean">true</span>
+        },
+        <span class="json-key">"quality"</span>: {
+          <span class="json-key">"resolution"</span>: <span class="json-string">"1080p"</span>,
+          <span class="json-key">"format"</span>: <span class="json-string">"mp4"</span>,
+          <span class="json-key">"size_mb"</span>: <span class="json-number">12.5</span>
+        }
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">302</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Fabric Selection Tips"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"How to choose the right fabric for your project"</span>,
+        <span class="json-key">"video_url"</span>: <span class="json-string">"/web/content/reels.video/302/video_file"</span>,
+        <span class="json-key">"thumbnail_url"</span>: <span class="json-string">"/web/image/reels.video/302/thumbnail"</span>,
+        <span class="json-key">"duration"</span>: <span class="json-number">45</span>,
+        <span class="json-key">"creator"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">67</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Layla Hassan"</span>,
+          <span class="json-key">"username"</span>: <span class="json-string">"@layla_fabrics"</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/67/avatar_128"</span>,
+          <span class="json-key">"is_verified"</span>: <span class="json-boolean">false</span>,
+          <span class="json-key">"follower_count"</span>: <span class="json-number">3250</span>
+        },
+        <span class="json-key">"category"</span>: <span class="json-string">"tips"</span>,
+        <span class="json-key">"created_date"</span>: <span class="json-string">"2024-01-14T16:30:00Z"</span>,
+        <span class="json-key">"stats"</span>: {
+          <span class="json-key">"views"</span>: <span class="json-number">2340</span>,
+          <span class="json-key">"likes"</span>: <span class="json-number">89</span>,
+          <span class="json-key">"comments"</span>: <span class="json-number">12</span>,
+          <span class="json-key">"shares"</span>: <span class="json-number">8</span>,
+          <span class="json-key">"saves"</span>: <span class="json-number">34</span>
+        },
+        <span class="json-key">"user_interaction"</span>: {
+          <span class="json-key">"liked"</span>: <span class="json-boolean">true</span>,
+          <span class="json-key">"saved"</span>: <span class="json-boolean">false</span>,
+          <span class="json-key">"following_creator"</span>: <span class="json-boolean">false</span>
+        }
+      }
+    ],
+    <span class="json-key">"categories"</span>: [<span class="json-string">"tutorials"</span>, <span class="json-string">"tips"</span>, <span class="json-string">"inspiration"</span>, <span class="json-string">"reviews"</span>],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"has_next"</span>: <span class="json-boolean">true</span>,
+      <span class="json-key">"total_reels"</span>: <span class="json-number">1250</span>
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> reels.video, reels.interaction, reels.category</li>
+                        <li><strong>Video Storage:</strong> Optimized video compression and CDN delivery</li>
+                        <li><strong>Analytics:</strong> View tracking, engagement metrics, and recommendations</li>
+                        <li><strong>Content Moderation:</strong> Automated and manual content review</li>
+                        <li><strong>Creator Tools:</strong> Upload, editing, and monetization features</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Like Reel API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Like/Unlike Reel
+                </h4>
+                <div class="endpoint-url">/api/v1/reels/like</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Toggle like status on a reel video, updating engagement metrics and user interaction history.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"reel_id"</span>: <span class="json-number">301</span>,
+  <span class="json-key">"action"</span>: <span class="json-string">"like"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Reel liked successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"reel_id"</span>: <span class="json-number">301</span>,
+    <span class="json-key">"user_liked"</span>: <span class="json-boolean">true</span>,
+    <span class="json-key">"total_likes"</span>: <span class="json-number">343</span>,
+    <span class="json-key">"like_change"</span>: <span class="json-number">1</span>
+  }
+}
+                </div>
+            </div>
+
+            <!-- Share Reel API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Share Reel
+                </h4>
+                <div class="endpoint-url">/api/v1/reels/share</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Share a reel via different platforms or within the app, tracking share metrics and generating share links.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"reel_id"</span>: <span class="json-number">301</span>,
+  <span class="json-key">"share_type"</span>: <span class="json-string">"external"</span>,
+  <span class="json-key">"platform"</span>: <span class="json-string">"whatsapp"</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Check out this amazing buttonhole technique!"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Share link generated successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"share_url"</span>: <span class="json-string">"https://baytalkhyata.com/reels/301?ref=share_abc123"</span>,
+    <span class="json-key">"short_url"</span>: <span class="json-string">"https://btk.ly/r301s"</span>,
+    <span class="json-key">"share_id"</span>: <span class="json-string">"share_abc123"</span>,
+    <span class="json-key">"total_shares"</span>: <span class="json-number">46</span>,
+    <span class="json-key">"platform_specific"</span>: {
+      <span class="json-key">"whatsapp_text"</span>: <span class="json-string">"Check out this amazing buttonhole technique! https://btk.ly/r301s"</span>
+    }
+  }
+}
+                </div>
+            </div>
+        </section>
+
+        <section id="authentication" class="section">
+            <h2><i class="fas fa-shield-alt"></i> Authentication & User Management APIs</h2>
+            
+            <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                Secure user authentication system with OTP verification, JWT tokens, and comprehensive profile management.
+            </p>
+
+            <!-- Send OTP API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Send OTP for Registration
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/send-otp</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Send OTP verification code to user's phone number before account creation. Validates phone uniqueness and generates secure 6-digit code.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Content-Type: application/json
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+  <span class="json-key">"country_code"</span>: <span class="json-string">"EG"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"OTP sent successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"otp_id"</span>: <span class="json-string">"otp_12345"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">300</span>,
+    <span class="json-key">"retry_after"</span>: <span class="json-number">60</span>
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> Custom <code>otp.verification</code> model</li>
+                        <li><strong>Fields:</strong> phone, otp_code (hashed), expiry_time, attempts, created_date</li>
+                        <li><strong>Validation:</strong> Check phone uniqueness in res.partner</li>
+                        <li><strong>SMS Provider:</strong> Integration with Twilio/2Factor/Infobip</li>
+                        <li><strong>Security:</strong> Rate limiting (max 3 OTP per hour per phone)</li>
+                    </ul>
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">PHONE_EXISTS (409)</span>: Phone number already registered
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_PHONE (400)</span>: Invalid phone number format
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">RATE_LIMIT (429)</span>: Too many OTP requests
+                    </div>
+                </div>
+            </div>
+
+            <!-- Register API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    User Registration with OTP Verification
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/register</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Complete user registration after OTP verification. Creates user account in Odoo with portal access and generates authentication token.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+  <span class="json-key">"otp"</span>: <span class="json-string">"123456"</span>,
+  <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed"</span>,
+  <span class="json-key">"password"</span>: <span class="json-string">"StrongPass123"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"ahmed@example.com"</span>,
+  <span class="json-key">"referral_code"</span>: <span class="json-string">"REF123"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"User registered successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user_id"</span>: <span class="json-number">42</span>,
+    <span class="json-key">"token"</span>: <span class="json-string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+    <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>,
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">42</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed"</span>,
+      <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"ahmed@example.com"</span>,
+      <span class="json-key">"referral_code"</span>: <span class="json-string">"AHMED123"</span>,
+      <span class="json-key">"points"</span>: <span class="json-number">100</span>
+    }
+  }
+}
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                    <ul>
+                        <li><strong>Models:</strong> res.users, res.partner, loyalty.program</li>
+                        <li><strong>Process:</strong> Validate OTP → Create partner → Create user → Assign portal group</li>
+                        <li><strong>Login Field:</strong> Set login = phone number</li>
+                        <li><strong>Referral System:</strong> Generate unique referral code, process referrer rewards</li>
+                        <li><strong>Welcome Bonus:</strong> Award 100 points for new registration</li>
+                    </ul>
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_OTP (400)</span>: Incorrect or expired OTP
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">WEAK_PASSWORD (400)</span>: Password doesn't meet requirements
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_REFERRAL (400)</span>: Referral code not found
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    User Login
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/login</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Authenticate user with phone number and password. Returns JWT token for subsequent API calls.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+  <span class="json-key">"password"</span>: <span class="json-string">"StrongPass123"</span>,
+  <span class="json-key">"device_id"</span>: <span class="json-string">"device_12345"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Login successful"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"token"</span>: <span class="json-string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
+    <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>,
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">42</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed"</span>,
+      <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"ahmed@example.com"</span>,
+      <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/42/image_128"</span>,
+      <span class="json-key">"points"</span>: <span class="json-number">1250</span>,
+      <span class="json-key">"referral_code"</span>: <span class="json-string">"AHMED123"</span>
+    }
+  }
+}
+                </div>
+
+                <div class="error-codes">
+                    <h5>Error Responses</h5>
+                    <div class="error-item">
+                        <span class="error-code">INVALID_CREDENTIALS (401)</span>: Wrong phone or password
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">ACCOUNT_DISABLED (403)</span>: User account is deactivated
+                    </div>
+                    <div class="error-item">
+                        <span class="error-code">TOO_MANY_ATTEMPTS (429)</span>: Account temporarily locked
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forgot Password API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Forgot Password (Reset via OTP)
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/forgot-password</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Initiate password reset process by sending OTP to registered phone number.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Password reset OTP sent"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"otp_id"</span>: <span class="json-string">"reset_otp_12345"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">300</span>
+  }
+}
+                </div>
+            </div>
+
+            <!-- Reset Password API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Reset Password
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/reset-password</div>
+                
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+  <span class="json-key">"otp"</span>: <span class="json-string">"123456"</span>,
+  <span class="json-key">"new_password"</span>: <span class="json-string">"NewStrongPass123"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Password reset successfully"</span>
+}
+                </div>
+            </div>
+
+            <!-- Get Profile API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-get">GET</span>
+                    Get User Profile
+                </h4>
+                <div class="endpoint-url">/api/v1/profile</div>
+                
+                <div class="info-box">
+                    <h5>Purpose</h5>
+                    <p>Retrieve complete user profile information including personal details, points, courses, and preferences.</p>
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">42</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed"</span>,
+      <span class="json-key">"phone"</span>: <span class="json-string">"+201234567890"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"ahmed@example.com"</span>,
+      <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/42/image_128"</span>,
+      <span class="json-key">"join_date"</span>: <span class="json-string">"2024-01-15"</span>
+    },
+    <span class="json-key">"loyalty"</span>: {
+      <span class="json-key">"points"</span>: <span class="json-number">1250</span>,
+      <span class="json-key">"level"</span>: <span class="json-string">"Silver"</span>,
+      <span class="json-key">"referral_code"</span>: <span class="json-string">"AHMED123"</span>,
+      <span class="json-key">"referrals_count"</span>: <span class="json-number">5</span>
+    },
+    <span class="json-key">"courses"</span>: {
+      <span class="json-key">"enrolled"</span>: <span class="json-number">3</span>,
+      <span class="json-key">"completed"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"certificates"</span>: <span class="json-number">1</span>
+    },
+    <span class="json-key">"orders"</span>: {
+      <span class="json-key">"total_orders"</span>: <span class="json-number">8</span>,
+      <span class="json-key">"total_spent"</span>: <span class="json-number">2500.00</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Update Profile API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-put">PUT</span>
+                    Update User Profile
+                </h4>
+                <div class="endpoint-url">/api/v1/profile/update</div>
+                
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Headers</h5>
+                <div class="code-block">
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: multipart/form-data
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed Ali"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"ahmed.new@example.com"</span>,
+  <span class="json-key">"avatar"</span>: <span class="json-string">"base64_image_data"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Profile updated successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">42</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed Ali"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"ahmed.new@example.com"</span>,
+      <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.users/42/image_128"</span>
+    }
+  }
+}
+                </div>
+            </div>
+
+            <!-- Change Password API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-put">PUT</span>
+                    Change Password
+                </h4>
+                <div class="endpoint-url">/api/v1/profile/change-password</div>
+                
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"current_password"</span>: <span class="json-string">"OldPassword123"</span>,
+  <span class="json-key">"new_password"</span>: <span class="json-string">"NewStrongPass123"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Password changed successfully"</span>
+}
+                </div>
+            </div>
+
+            <!-- Refresh Token API -->
+            <div class="api-endpoint">
+                <h4>
+                    <span class="method-badge method-post">POST</span>
+                    Refresh Authentication Token
+                </h4>
+                <div class="endpoint-url">/api/v1/auth/refresh</div>
+                
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>
+}
+                </div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"token"</span>: <span class="json-string">"new_jwt_token_here"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>
+  }
+}
+                </div>
+            </div>
+        </section>

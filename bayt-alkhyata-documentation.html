@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayt Alkhyata - Mobile App Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: #ff8c00;
+            text-align: center;
+            padding: 40px 0;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 20px rgba(255, 140, 0, 0.3);
+            position: relative;
+            border-bottom: 3px solid #ff6600;
+        }
+
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            color: white;
+            margin: 10px 0 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .language-switcher {
+            display: none;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff6600;
+            color: white;
+            border: 2px solid #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .language-switcher:hover {
+            background: #ffffff;
+            color: #ff8c00;
+            transform: translateY(-2px);
+        }
+
+        .nav {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(255,140,0,0.3);
+            border: 2px solid #ff8c00;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #ff8c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .nav-item:hover {
+            transform: translateY(-3px);
+            background: #ff6600;
+            box-shadow: 0 8px 25px rgba(255,140,0,0.4);
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+            margin-left: 15px;
+        }
+
+        .nav-item span {
+            font-weight: 600;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border: 2px solid #ff8c00;
+        }
+
+        .section h2 {
+            color: #4a5568;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h2 i {
+            color: #ff8c00;
+        }
+
+        .section h3 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff8c00;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: #fff5e6;
+            color: #ff6600;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(255,140,0,0.3);
+            border: 2px solid #ff8c00;
+        }
+
+        .feature-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-badge {
+            background: #ff8c00;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: 1px solid #ff6600;
+        }
+
+        .flow-diagram {
+            background: #f7fafc;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #ff8c00;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .flow-step .step-number {
+            background: #ff8c00;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-left: 15px;
+            border: 2px solid #ff6600;
+        }
+
+        .figma-preview {
+            background: #ff8c00;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin: 20px 0;
+            border: 2px solid #ff6600;
+        }
+
+        .figma-preview a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ff6600;
+            padding: 15px 25px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid #ffffff;
+        }
+
+        .figma-preview a:hover {
+            background: #ffffff;
+            color: #ff8c00;
+            transform: translateY(-2px);
+        }
+
+        .odoo-integration {
+            background: #fff5e6;
+            border: 2px solid #ff8c00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .odoo-integration h4 {
+            color: #ff6600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mobile-features {
+            background: #fff5e6;
+            border: 2px solid #ff8c00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .mobile-features h4 {
+            color: #ff6600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer {
+            background: #ff8c00;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 3px solid #ff6600;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #ff8c00;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,140,0,0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            border: 2px solid #ff6600;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            background: #ff6600;
+            box-shadow: 0 8px 25px rgba(255,140,0,0.4);
+        }
+
+        /* Print styles for PDF compatibility */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+            
+            body {
+                background: white !important;
+                color: #333 !important;
+            }
+            
+            .header {
+                position: static !important;
+                page-break-inside: avoid;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                margin-bottom: 20px !important;
+            }
+            
+            .scroll-to-top {
+                display: none !important;
+            }
+            
+            .language-switcher {
+                display: none !important;
+            }
+            
+            .nav {
+                page-break-after: always;
+            }
+            
+            .feature-card {
+                page-break-inside: avoid;
+                margin-bottom: 15px !important;
+            }
+            
+            .flow-step {
+                page-break-inside: avoid;
+            }
+            
+            a {
+                text-decoration: none !important;
+            }
+            
+            .figma-preview a::after {
+                content: " (" attr(href) ")";
+                font-size: 0.8em;
+                color: #666;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="bayt-alkhyata-documentation-ar.html" class="language-switcher">العربية</a>
+            <h1>🧵 Bayt Alkhyata Mobile Application</h1>
+            <p>Comprehensive Technical Documentation & Integration Guide</p>
+        </header>
+
+        <nav class="nav-menu">
+            <div class="nav-grid">
+                <a href="#registration" class="nav-item">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registration & Login</span>
+                </a>
+                <a href="#courses" class="nav-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Courses Section</span>
+                </a>
+                <a href="#reels" class="nav-item">
+                    <i class="fas fa-video"></i>
+                    <span>Reels Section</span>
+                </a>
+                <a href="#checkout" class="nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Checkout & Payment</span>
+                </a>
+                <a href="#profile" class="nav-item">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Profile & Loyalty System</span>
+                </a>
+                <a href="#community" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Community & Forum</span>
+                </a>
+                <a href="#quizzes" class="nav-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Quizzes & Certification</span>
+                </a>
+                <a href="#inventory" class="nav-item">
+                    <i class="fas fa-boxes"></i>
+                    <span>Inventory & Products</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="figma-preview">
+            <h3><i class="fab fa-figma"></i> Design Preview</h3>
+            <p>View the interactive app design on Figma</p>
+            <a href="https://www.figma.com/proto/K0TSQH4rb5kC41Lav0YElK/Bayt-Alkhyata?node-id=12-996&p=f&t=NIiG7WSMlHb7oMYV-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=12%3A994&show-proto-sidebar=1" target="_blank">
+                <i class="fas fa-external-link-alt"></i>
+                View Design on Figma
+            </a>
+        </div>
+
+        <section id="registration" class="section">
+            <h2><i class="fas fa-user-plus"></i> Registration & Login</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-mobile-alt"></i> Mobile Access</h4>
+                    <p>Advanced authentication system using OTP (One-Time Password) via mobile phone number to ensure security and ease of use.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-user-edit"></i> Registration Fields</h4>
+                    <p>Name and phone number (required) - Email (optional) with a simple and user-friendly interface.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Registration Flow</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Registration:</strong> Enter basic information (name and phone number)
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Accept Terms:</strong> Agree to terms and conditions
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Receive OTP:</strong> Send verification code via SMS
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Verification:</strong> Enter verification code and confirm account
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Synchronization:</strong> Automatically link account with Odoo contacts
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Customize Contacts module to save user data</li>
+                    <li>Develop custom Auth Signup system to support OTP login</li>
+                    <li>Secure storage for OTP codes and user sessions</li>
+                    <li>Automatic linking with customer database</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Simple and responsive user interface</li>
+                    <li>Fast and smooth transitions between screens</li>
+                    <li>Automatic redirect to profile after first login</li>
+                    <li>Support for changing password later from profile</li>
+                    <li>Password recovery via OTP</li>
+                </ul>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Odoo Contacts</span>
+                <span class="tech-badge">Auth Signup</span>
+                <span class="tech-badge">OTP Authentication</span>
+                <span class="tech-badge">SMS Gateway</span>
+                <span class="tech-badge">Session Management</span>
+            </div>
+        </section>
+
+        <section id="courses" class="section">
+            <h2><i class="fas fa-graduation-cap"></i> E-Learning Courses</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-play-circle"></i> Video Lessons</h4>
+                    <p>High-quality video lessons with the ability to pause, rewind, and control playback speed.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-file-pdf"></i> PDF Materials</h4>
+                    <p>Downloadable PDF files containing lesson summaries and additional resources.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-bookmark"></i> Progress Tracking</h4>
+                    <p>Track learning progress and resume from where you left off.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-certificate"></i> Certificates</h4>
+                    <p>Digital certificates upon course completion with verification system.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Course Structure</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Home Page:</strong> Display all available categories
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Category:</strong> Select specific category (sewing, embroidery, etc.)
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Level:</strong> Choose level (beginner, intermediate, advanced)
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Course:</strong> View course details and content
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo eLearning Integration</h4>
+                <ul>
+                    <li>Use core eLearning module (Course → Section → Content)</li>
+                    <li>Add custom level grouping functionality</li>
+                    <li>Connect with payment system for payment verification</li>
+                    <li>Automatically unlock content after successful payment</li>
+                    <li>Track user progress in each course</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Easy hierarchical navigation (Home → Category → Level → Course)</li>
+                    <li>Automatic content unlock after payment</li>
+                    <li>Display purchased courses in "My Courses" section</li>
+                    <li>Support for video, audio, and text content</li>
+                    <li>Download capability for offline viewing</li>
+                </ul>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Odoo eLearning</span>
+                <span class="tech-badge">Course Management</span>
+                <span class="tech-badge">Level Grouping</span>
+                <span class="tech-badge">Payment Integration</span>
+                <span class="tech-badge">Progress Tracking</span>
+            </div>
+        </section>
+
+        <section id="reels" class="section">
+            <h2><i class="fas fa-video"></i> Short Video Reels</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-mobile-alt"></i> Vertical Short Videos</h4>
+                    <p>Experience similar to Instagram Reels with short and engaging videos in sewing and handicrafts.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-heart"></i> Social Interaction</h4>
+                    <p>Like, comment, and share functionality with advanced interaction system.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>User Experience</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Access:</strong> Tap on "Reels" tab in bottom navigation
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Viewing:</strong> Swipe videos vertically to navigate
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Interaction:</strong> Like, comment, share videos
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use Blog module or custom media model</li>
+                    <li>Store videos and captions</li>
+                    <li>Track interaction metrics (likes, comments, views)</li>
+                    <li>Manage content from Odoo dashboard</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Smooth and fast video swiping</li>
+                    <li>Video caching for faster loading</li>
+                    <li>Auto-play when reaching video</li>
+                    <li>Intuitive interaction interface</li>
+                    <li>Support for high-quality videos</li>
+                </ul>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Odoo Blog</span>
+                <span class="tech-badge">Media Management</span>
+                <span class="tech-badge">Video Streaming</span>
+                <span class="tech-badge">Social Interaction</span>
+                <span class="tech-badge">Content Caching</span>
+            </div>
+        </section>
+
+        <section id="checkout" class="section">
+            <h2><i class="fas fa-shopping-cart"></i> Checkout & Payment</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-shopping-basket"></i> Unified Cart</h4>
+                    <p>Unified payment system for physical products and digital courses in one cart.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-credit-card"></i> Multiple Payment Gateways</h4>
+                    <p>Support for local and international payment gateways like Paymob and PayTabs.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Purchase Flow</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Add Items:</strong> Add products and courses to cart
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Review Order:</strong> View order details and prices
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Accept Terms:</strong> Agree to terms and conditions
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Payment:</strong> Complete secure payment process
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Confirmation:</strong> Deduct inventory or unlock course
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use Website Sale module for e-commerce</li>
+                    <li>Connect with payment gateways (Paymob/PayTabs)</li>
+                    <li>Automatically deduct inventory for physical products</li>
+                    <li>Automatically unlock courses after successful payment</li>
+                    <li>Send electronic invoices and receipts</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Use REST APIs for seamless integration</li>
+                    <li>Display terms and conditions link with checkbox</li>
+                    <li>Secure and encrypted payment interface</li>
+                    <li>Instant order confirmations</li>
+                    <li>Real-time order status tracking</li>
+                </ul>
+            </div>
+
+            <div class="tech-stack">
+                <span class="tech-badge">Odoo Website Sale</span>
+                <span class="tech-badge">Paymob Gateway</span>
+                <span class="tech-badge">PayTabs Gateway</span>
+                <span class="tech-badge">REST APIs</span>
+                <span class="tech-badge">Secure Payment</span>
+            </div>
+        </section>
+
+        <section id="profile" class="section">
+            <h2><i class="fas fa-user-circle"></i> User Profile & Loyalty System</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-user-edit"></i> Profile Information</h4>
+                    <p>Comprehensive personal data management: name, phone, email, and profile picture.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-gift"></i> Referral & Points System</h4>
+                    <p>Each user has a unique referral code, with the ability to earn and use points for discounts.</p>
+                </div>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-graduation-cap"></i> My Courses</h4>
+                    <p>Display all purchased courses with progress tracking and quick access.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-shield-alt"></i> Security & Privacy</h4>
+                    <p>Change password, manage sessions, and optional two-factor authentication.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Profile Sections</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Personal Information:</strong> View and edit basic data
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>My Courses:</strong> Purchased courses and learning progress
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Points & Referrals:</strong> Referral code and points balance
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Security:</strong> Protection settings and password
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Help:</strong> About the app and help center
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use Res.Users for user data management</li>
+                    <li>Custom Loyalty module for points and referral system</li>
+                    <li>Track points and usage through coupon system</li>
+                    <li>Connect with eLearning to display purchased courses</li>
+                    <li>Save security and privacy settings</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Unified profile page with sub-pages</li>
+                    <li>Easy interface for managing points and referrals</li>
+                    <li>Display courses with progress bar</li>
+                    <li>Advanced security settings</li>
+                    <li>Quick access to help and support</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="community" class="section">
+            <h2><i class="fas fa-users"></i> Community & Forum</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-comments"></i> Social Space</h4>
+                    <p>Interactive forum for discussions and sharing in sewing and handicrafts.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-heart"></i> Community Interaction</h4>
+                    <p>Like, comment, and reply to posts with rating system.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Community Experience</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Access:</strong> Enter community from main menu
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Browse:</strong> View posts and topics
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Interact:</strong> Like, comment, reply to posts
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Share:</strong> Create new posts
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use Website Forum or Blog for posts</li>
+                    <li>APIs to fetch posts and comments</li>
+                    <li>Like and rating system</li>
+                    <li>Content management and moderation</li>
+                    <li>Topic categorization and tags</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Optimized design for mobile reading</li>
+                    <li>Media support (images, videos)</li>
+                    <li>Pagination for fast loading</li>
+                    <li>Notifications for new interactions</li>
+                    <li>Advanced search in posts</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="tests" class="section">
+            <h2><i class="fas fa-question-circle"></i> Tests & Certificates</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-clipboard-check"></i> Interactive Tests</h4>
+                    <p>Comprehensive tests after completing each course with text and image questions.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-certificate"></i> Automatic Certificates</h4>
+                    <p>Automatically issue completion certificates upon passing the test.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Test & Certificate Flow</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Complete Course:</strong> Finish all course lessons
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Unlock Test:</strong> Final test becomes available
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Take Test:</strong> Answer the questions
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Pass:</strong> Achieve required grade
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div>
+                        <strong>Certificate:</strong> Automatically issue completion certificate
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use built-in eLearning Quiz</li>
+                    <li>Enable certificates for each course</li>
+                    <li>Save test results in user record</li>
+                    <li>Customizable certificate templates</li>
+                    <li>Track statistics and reports</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Display mixed questions (text and images)</li>
+                    <li>Mobile-optimized user interface</li>
+                    <li>Display certificate with sharing options</li>
+                    <li>Download certificate as PDF</li>
+                    <li>Share achievements on social media</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="inventory" class="section">
+            <h2><i class="fas fa-boxes"></i> Inventory & Product Display</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-sync-alt"></i> Real-time Sync</h4>
+                    <p>Real-time synchronization of product data and inventory from Odoo to the app.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-eye-slash"></i> Smart Inventory Management</h4>
+                    <p>Automatically hide or mark unavailable products.</p>
+                </div>
+            </div>
+
+            <div class="flow-diagram">
+                <h3>Product Management</h3>
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Odoo Management:</strong> Add and edit products in Odoo
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Synchronization:</strong> Automatically transfer data to app
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Display:</strong> Show products in the app
+                    </div>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>Update Inventory:</strong> Update quantities after each sale
+                    </div>
+                </div>
+            </div>
+
+            <div class="odoo-integration">
+                <h4><i class="fab fa-odoo"></i> Odoo Integration</h4>
+                <ul>
+                    <li>Use Inventory module for stock management</li>
+                    <li>Connect with Website Sale for e-commerce</li>
+                    <li>Real-time updates of available quantities</li>
+                    <li>Manage categories and brands</li>
+                    <li>Track inventory movement and sales</li>
+                </ul>
+            </div>
+
+            <div class="mobile-features">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile App Features</h4>
+                <ul>
+                    <li>Attractive product display</li>
+                    <li>Advanced filtering and search</li>
+                    <li>High-quality product images</li>
+                    <li>Detailed information for each product</li>
+                    <li>Notifications when products become available</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="future" class="section">
+            <h2><i class="fas fa-cogs"></i> Future Customizations</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4><i class="fas fa-gift"></i> Loyalty & Referral System</h4>
+                    <p>Custom module for managing loyalty points and referral codes with comprehensive integration.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-shield-alt"></i> OTP Authentication</h4>
+                    <p>Extend registration system to support secure authentication via OTP.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-video"></i> Reels & Community</h4>
+                    <p>Customize Blog or Forum modules to support interactive content.</p>
+                </div>
+                <div class="feature-card">
+                    <h4><i class="fas fa-percentage"></i> Points Redemption</h4>
+                    <p>Integration with coupon and discount rules for using points.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="scroll-to-top" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <footer class="footer">
+        <p><i class="fas fa-heart"></i> تم إنشاء هذا الدليل بعناية لمشروع بيت الخياطة</p>
+        <p>نظام متكامل يجمع بين قوة Odoo ومرونة التطبيقات المحمولة</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-to-top');
+            if (window.pageYOffset > 300) {
+                scrollButton.classList.add('visible');
+            } else {
+                scrollButton.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

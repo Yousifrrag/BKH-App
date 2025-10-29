@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bayt AlKhyata API Documentation - Complete Integration Guide</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #c6c6c6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-container {
+            background: #2d3748;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-link {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+            font-weight: 500;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: #4a5568;
+            border-bottom-color: #FF6B35;
+            color: white;
+        }
+
+        .content {
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            color: #2d3748;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FF6B35;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .api-endpoint {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .api-endpoint:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .api-endpoint h4 {
+            color: #2d3748;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .method-get { background: #22c55e; color: white; }
+        .method-post { background: #3b82f6; color: white; }
+        .method-put { background: #f59e0b; color: white; }
+        .method-delete { background: #ef4444; color: white; }
+
+        .endpoint-url {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #FF6B35;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 15px 0;
+            border-left: 4px solid #64ffda;
+            position: relative;
+        }
+
+        .json-key { color: #CF5227; }
+        .json-string { color: #a7f3d0; }
+        .json-number { color: #fbbf24; }
+        .json-boolean { color: #f87171; }
+        .json-comment { color: #9ca3af; font-style: italic; }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .info-box h5 {
+            color: #0c4a6e;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+            color: #0f172a;
+        }
+
+        /* Search functionality removed for PDF conversion */
+
+        .error-codes {
+            margin: 20px 0;
+        }
+
+        .error-codes h5 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .error-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .error-code {
+            background: #ef4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .header p { font-size: 1rem; }
+            .nav { flex-direction: column; }
+            .nav-link { text-align: center; }
+            .content { padding: 20px 15px; }
+            .api-endpoint { padding: 20px 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-code"></i> Bayt AlKhyata API Documentation</h1>
+            <p>Complete Integration Guide for Mobile App with Odoo ERP v18</p>
+        </header>
+
+        <nav class="nav-container">
+            <div class="nav">
+                <a href="#overview" class="nav-link active">Overview</a>
+                <a href="#authentication" class="nav-link">Authentication</a>
+                <a href="#elearning" class="nav-link">E-Learning</a>
+                <a href="#ecommerce" class="nav-link">E-Commerce</a>
+                <a href="#points-rewards" class="nav-link">Points & Rewards</a>
+                <a href="#community" class="nav-link">Community</a>
+                <a href="#static-pages" class="nav-link">Static Pages</a>
+                <a href="#error-handling" class="nav-link">Error Handling</a>
+            </div>
+        </nav>
+
+        <!-- Search functionality removed for PDF conversion -->
+
+        <div class="content">
+            <section id="overview" class="section">
+                <h2><i class="fas fa-info-circle"></i> System Overview</h2>
+                
+                <div class="info-box">
+                    <h5><i class="fas fa-mobile-alt"></i> About Bayt AlKhyata Mobile App</h5>
+                    <p>The Bayt AlKhyata mobile application is a comprehensive platform for sewing and tailoring education, connecting learners with expert instructors and providing access to courses, products, and a vibrant community. The app integrates seamlessly with Odoo ERP v18 to provide a robust backend infrastructure.</p>
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-cogs"></i> Key Features</h5>
+                    <ul>
+                        <li><strong>Authentication & User Management:</strong> Secure OTP-based registration and login</li>
+                        <li><strong>E-Learning Platform:</strong> Comprehensive courses, quizzes, and certifications</li>
+                        <li><strong>E-Commerce Integration:</strong> Product catalog, shopping cart, and secure checkout</li>
+                        <li><strong>Points & Rewards System:</strong> Loyalty program with referral codes and discounts</li>
+                        <li><strong>Community Features:</strong> Blog posts, discussions, and user interactions</li>
+                        <li><strong>Reels & Media:</strong> Short video content with engagement features</li>
+                        <li><strong>Support & Information:</strong> Help center, terms, and company information</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h5><i class="fas fa-server"></i> Technical Architecture</h5>
+                    <ul>
+                        <li><strong>Backend:</strong> Odoo ERP v18 with custom modules and REST API controllers</li>
+                        <li><strong>Authentication:</strong> JWT token-based authentication with refresh mechanisms</li>
+                        <li><strong>Security:</strong> HTTPS encryption, input validation, and rate limiting</li>
+                        <li><strong>Data Format:</strong> JSON request/response with consistent error handling</li>
+                        <li><strong>Mobile Optimization:</strong> Optimized for mobile networks and offline capabilities</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="authentication" class="section">
+                <h2><i class="fas fa-shield-alt"></i> Authentication & User Management APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Secure user authentication system with OTP verification, JWT tokens, and comprehensive profile management.
+                </p>
+
+                <!-- Send OTP API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Send OTP for Registration
+                    </h4>
+                    <div class="endpoint-url">/api/v1/auth/send-otp</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Send OTP verification code to user's mobile number for registration or login verification.</p>
+                    </div>
+
+                    <!-- Social Login Endpoints -->
+                    <div class="api-endpoint" style="margin: 30px 0;">
+                        <h4>
+                            <span class="method-badge method-post">POST</span>
+                            Facebook Login
+                        </h4>
+                        <div class="endpoint-url">/api/v1/auth/facebook</div>
+                        
+                        <div class="info-box">
+                            <h5>Purpose</h5>
+                            <p>Authenticate user via Facebook OAuth and link to phone number for OTP verification.</p>
+                        </div>
+                        
+                        <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                        <div class="code-block">
+{
+  <span class="json-key">"access_token"</span>: <span class="json-string">"facebook_access_token"</span>,
+  <span class="json-key">"phone_number"</span>: <span class="json-string">"+20 1012345678"</span> <span class="json-comment">// Required for OTP verification</span>
+}
+                        </div>
+                    </div>
+
+                    <div class="api-endpoint" style="margin: 30px 0;">
+                        <h4>
+                            <span class="method-badge method-post">POST</span>
+                            Google Login
+                        </h4>
+                        <div class="endpoint-url">/api/v1/auth/google</div>
+                        
+                        <div class="info-box">
+                            <h5>Purpose</h5>
+                            <p>Authenticate user via Google OAuth and link to phone number for OTP verification.</p>
+                        </div>
+                        
+                        <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                        <div class="code-block">
+{
+  <span class="json-key">"id_token"</span>: <span class="json-string">"google_id_token"</span>,
+  <span class="json-key">"phone_number"</span>: <span class="json-string">"+20 1012345678"</span> <span class="json-comment">// Required for OTP verification</span>
+}
+                        </div>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"phone_number"</span>: <span class="json-string">"+966501234567"</span>,
+  <span class="json-key">"purpose"</span>: <span class="json-string">"registration"</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"OTP sent successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"otp_id"</span>: <span class="json-string">"otp_abc123"</span>,
+    <span class="json-key">"expires_in"</span>: <span class="json-number">300</span>,
+    <span class="json-key">"phone_number"</span>: <span class="json-string">"+966501234567"</span>
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> res.partner, sms.sms, auth.otp</li>
+                            <li><strong>SMS Gateway:</strong> Integration with SMS providers (Twilio, local providers)</li>
+                            <li><strong>Rate Limiting:</strong> Prevent OTP spam (max 3 per hour per number)</li>
+                            <li><strong>Security:</strong> OTP expires in 5 minutes, single-use validation</li>
+                        </ul>
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border-left: 4px solid #4299e1;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-mobile-alt" style="margin-right: 10px; color: #4299e1;"></i>
+                            UI Design Reference - Phone Verification
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <img src="Bayt Alkhyata/Sign Up otp.png" alt="OTP Verification Screen" style="max-width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                <p style="margin: 10px 0 0 0; color: #718096; font-weight: 500; font-size: 0.9rem;">OTP Verification Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Model:</strong> res.partner (customer creation)</li>
+                                    <li><strong>SMS Module:</strong> sms.sms for OTP delivery (Egypt SMS gateway)</li>
+                                    <li><strong>Validation:</strong> Egyptian phone format (+20 1XXXXXXXXX)</li>
+                                    <li><strong>Security:</strong> Rate limiting via ir.config_parameter</li>
+                                    <li><strong>Integration:</strong> Egypt-specific SMS gateway configuration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Registration API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        User Registration with OTP Verification
+                    </h4>
+                    <div class="endpoint-url">/api/v1/auth/register</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Complete user registration after OTP verification, creating user account and generating authentication tokens.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"phone_number"</span>: <span class="json-string">"+20 1012345678"</span>,
+  <span class="json-key">"otp_code"</span>: <span class="json-string">"123456"</span>,
+  <span class="json-key">"otp_id"</span>: <span class="json-string">"otp_abc123"</span>,
+  <span class="json-key">"name"</span>: <span class="json-string">"Ahmed Mohamed"</span>,
+  <span class="json-key">"email"</span>: <span class="json-string">"ahmed@example.com"</span>, <span class="json-comment">// Optional field</span>
+  <span class="json-key">"password"</span>: <span class="json-string">"SecurePass123!"</span>,
+  <span class="json-key">"referral_code"</span>: <span class="json-string">"REF123"</span> <span class="json-comment">// Optional</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"User registered successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">123</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Fatima Al-Zahra"</span>,
+      <span class="json-key">"phone_number"</span>: <span class="json-string">"+966501234567"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"fatima@example.com"</span>,
+      <span class="json-key">"profile_picture"</span>: <span class="json-string">"/web/image/res.users/123/image_1920"</span>,
+      <span class="json-key">"is_founder"</span>: <span class="json-boolean">false</span>,
+      <span class="json-key">"founder_image"</span>: <span class="json-string">null</span>,
+      <span class="json-key">"referral_code"</span>: <span class="json-string">"FATIMA123"</span>,
+      <span class="json-key">"points_balance"</span>: <span class="json-number">100</span>
+    },
+    <span class="json-key">"authentication"</span>: {
+      <span class="json-key">"token"</span>: <span class="json-string">"jwt_token_here"</span>,
+      <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>,
+      <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>
+    }
+  }
+}
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border-left: 4px solid #38a169;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-user-plus" style="margin-right: 10px; color: #38a169;"></i>
+                            UI Design Reference - Registration Form
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <img src="Bayt Alkhyata/sign up.png" alt="Sign Up Screen Design" style="max-width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                <p style="margin: 10px 0 0 0; color: #718096; font-weight: 500; font-size: 0.9rem;">Registration Form Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>User Creation:</strong> res.users model with portal access</li>
+                                    <li><strong>Partner Record:</strong> res.partner for customer data</li>
+                                    <li><strong>Authentication:</strong> JWT token generation</li>
+                                    <li><strong>Social Login:</strong> OAuth integration (Facebook, Google)</li>
+                                    <li><strong>Mobile-First:</strong> Phone-based registration and OTP</li>
+                                    <li><strong>Points System:</strong> loyalty.program integration</li>
+                                    <li><strong>Profile Images:</strong> ir.attachment for file storage</li>
+                                    <li><strong>Referral System:</strong> Custom referral code generation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Login API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        User Login
+                    </h4>
+                    <div class="endpoint-url">/api/v1/auth/login</div>
+                    
+                    <div class="info-box">
+                        <h5>Login Options</h5>
+                        <ul>
+                            <li><strong>Phone & Password:</strong> Traditional login using phone number and password</li>
+                            <li><strong>Facebook OAuth:</strong> Social login via Facebook account</li>
+                            <li><strong>Google OAuth:</strong> Social login via Gmail/Google account</li>
+                        </ul>
+                    </div>
+                    
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body (Phone Login)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"phone_number"</span>: <span class="json-string">"+20 1012345678"</span>,
+  <span class="json-key">"password"</span>: <span class="json-string">"SecurePass123!"</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Login successful"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">123</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Fatima Al-Zahra"</span>,
+      <span class="json-key">"phone_number"</span>: <span class="json-string">"+966501234567"</span>,
+      <span class="json-key">"email"</span>: <span class="json-string">"fatima@example.com"</span>,
+      <span class="json-key">"profile_picture"</span>: <span class="json-string">"/web/image/res.users/123/image_1920"</span>,
+      <span class="json-key">"is_founder"</span>: <span class="json-boolean">false</span>,
+      <span class="json-key">"founder_image"</span>: <span class="json-string">null</span>
+    },
+    <span class="json-key">"authentication"</span>: {
+      <span class="json-key">"token"</span>: <span class="json-string">"jwt_token_here"</span>,
+      <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>,
+      <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>
+    }
+  }
+}
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%); border-radius: 12px; border-left: 4px solid #3b82f6;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-sign-in-alt" style="margin-right: 10px; color: #3b82f6;"></i>
+                            UI Design Reference - Login Form
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <img src="Bayt Alkhyata/log in.png" alt="Login Screen Design" style="max-width: 300px; height: auto; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                <p style="margin: 10px 0 0 0; color: #718096; font-weight: 500; font-size: 0.9rem;">Login Form Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Authentication:</strong> res.users.authenticate() method</li>
+                                    <li><strong>Session Management:</strong> HTTP session handling</li>
+                                    <li><strong>JWT Tokens:</strong> Custom JWT implementation</li>
+                                    <li><strong>User Validation:</strong> Active user status check</li>
+                                    <li><strong>Security:</strong> Rate limiting and brute force protection</li>
+                                    <li><strong>Multi-factor:</strong> SMS/Email verification support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Update Profile Picture API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-put">PUT</span>
+                        Update Profile Picture
+                    </h4>
+                    <div class="endpoint-url">/api/v1/auth/profile/picture</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Update user profile picture. For founders, this also updates their founder image displayed in the app.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body (multipart/form-data)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"profile_picture"</span>: <span class="json-string">"[File Upload]"</span>,
+  <span class="json-key">"is_founder_image"</span>: <span class="json-boolean">true</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Profile picture updated successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"profile_picture"</span>: <span class="json-string">"/web/image/res.users/123/image_1920"</span>,
+    <span class="json-key">"founder_image"</span>: <span class="json-string">"/web/image/res.users/123/founder_image"</span>,
+    <span class="json-key">"is_founder"</span>: <span class="json-boolean">true</span>
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-info-circle"></i> Founder Image Handling</h5>
+                        <ul>
+                            <li><strong>Automatic Detection:</strong> System identifies founders based on user roles</li>
+                            <li><strong>Image Processing:</strong> Founder images are optimized for display in app sections</li>
+                            <li><strong>Fallback:</strong> Default founder placeholder if no image is uploaded</li>
+                            <li><strong>Permissions:</strong> Only verified founders can update founder images</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="elearning" class="section">
+                <h2><i class="fas fa-graduation-cap"></i> E-Learning Module APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Comprehensive e-learning platform with courses, quizzes, certifications, and progress tracking.
+                </p>
+
+                <!-- Get All Courses API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get All Courses
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve paginated list of available courses with filtering and sorting options.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                    <div class="code-block">
+// Basic Filtering
+?category=beginner&free_only=true&page=1&limit=20&sort=popularity
+
+// Advanced Filtering Options
+?search=sewing                    // Search in title and description
+&category=beginner,intermediate   // Multiple categories
+&level=beginner                   // Skill level filter
+&price_min=0&price_max=500       // Price range filter
+&duration_min=5&duration_max=20  // Duration in hours filter
+&instructor=amira-hassan          // Filter by instructor
+&rating_min=4.0                  // Minimum rating filter
+&language=ar,en                  // Language preference
+&has_certificate=true            // Courses with certificates
+&sort=popularity,price,rating,date // Sort options
+&order=asc,desc                  // Sort direction
+&page=1&limit=20                 // Pagination
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-filter"></i> Available Filter Options</h5>
+                        <ul>
+                            <li><strong>Categories:</strong> beginner, intermediate, advanced, professional</li>
+                            <li><strong>Price Types:</strong> free, paid, premium</li>
+                            <li><strong>Languages:</strong> ar (Arabic), en (English)</li>
+                            <li><strong>Sort Options:</strong> popularity, price, rating, date, duration, title</li>
+                            <li><strong>Special Filters:</strong> has_certificate, recently_added, trending</li>
+                        </ul>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"courses"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Learn fundamental sewing skills from expert instructors"</span>,
+        <span class="json-key">"instructor"</span>: <span class="json-string">"Amira Hassan"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">0</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>,
+        <span class="json-key">"duration_hours"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"enrolled_count"</span>: <span class="json-number">1250</span>,
+        <span class="json-key">"rating"</span>: <span class="json-number">4.8</span>,
+        <span class="json-key">"thumbnail"</span>: <span class="json-string">"/web/image/slide.channel/101/image_1920"</span>
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">5</span>,
+      <span class="json-key">"total_courses"</span>: <span class="json-number">95</span>
+    }
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> slide.channel, slide.slide, hr.employee</li>
+                            <li><strong>Content Management:</strong> Rich media support with videos and documents</li>
+                            <li><strong>Access Control:</strong> Course visibility and enrollment permissions</li>
+                            <li><strong>Analytics:</strong> Enrollment tracking and completion rates</li>
+                        </ul>
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #fef7ff 0%, #f3e8ff 100%); border-radius: 12px; border-left: 4px solid #8b5cf6;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-graduation-cap" style="margin-right: 10px; color: #8b5cf6;"></i>
+                            UI Design Reference - E-Learning Interface
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                                    <img src="Bayt Alkhyata/Browsing courses.png" alt="Course Browsing" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                    <img src="Bayt Alkhyata/My Courses.png" alt="My Courses" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                </div>
+                                <img src="Bayt Alkhyata/Course Play-Full size.png" alt="Course Player" style="max-width: 300px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto 10px auto;">
+                                <p style="margin: 0; color: #718096; font-weight: 500; font-size: 0.9rem;">E-Learning Platform Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Course Management:</strong> slide.channel for course structure</li>
+                                    <li><strong>Content Delivery:</strong> slide.slide for lessons and materials</li>
+                                    <li><strong>Progress Tracking:</strong> slide.channel.partner for enrollment</li>
+                                    <li><strong>Video Streaming:</strong> Integrated video player with progress</li>
+                                    <li><strong>Certificates:</strong> survey.survey for completion certificates</li>
+                                    <li><strong>Instructor Profiles:</strong> hr.employee integration</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Enrollment API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Enroll in Course
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/enroll</div>
+                    
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"course_id"</span>: <span class="json-number">101</span>,
+  <span class="json-key">"payment_method"</span>: <span class="json-string">"points"</span>,
+  <span class="json-key">"discount_code"</span>: <span class="json-string">"WELCOME20"</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Successfully enrolled in course"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"enrollment_id"</span>: <span class="json-number">456</span>,
+    <span class="json-key">"course_id"</span>: <span class="json-number">101</span>,
+    <span class="json-key">"enrollment_date"</span>: <span class="json-string">"2024-01-16T10:30:00Z"</span>,
+    <span class="json-key">"access_expires"</span>: <span class="json-string">"2024-07-16T10:30:00Z"</span>
+  }
+}
+                    </div>
+                </div>
+            </section>
+
+            <section id="ecommerce" class="section">
+                <h2><i class="fas fa-shopping-cart"></i> E-Commerce / Shop APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Complete e-commerce functionality with product catalog, shopping cart, checkout, and order management.
+                </p>
+
+                <!-- Get All Products API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get All Products
+                    </h4>
+                    <div class="endpoint-url">/api/v1/products</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve paginated product catalog with real-time inventory, pricing, and filtering options.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                    <div class="code-block">
+// Basic Filtering
+?category=fabric&in_stock=true&min_price=50&max_price=500&page=1&limit=20
+
+// Advanced Filtering Options
+?search=cotton                    // Search in name and description
+&category=fabric,tools,patterns   // Multiple categories
+&subcategory=cotton,silk,wool     // Subcategory filter
+&brand=al-khayata,premium         // Brand filter
+&color=blue,red,white             // Color filter
+&material=cotton,silk,polyester   // Material type
+&size=small,medium,large          // Size filter
+&price_min=10&price_max=1000     // Price range
+&rating_min=4.0                  // Minimum rating
+&in_stock=true                   // Stock availability
+&on_sale=true                    // Sale items only
+&new_arrivals=true               // Recently added products
+&featured=true                   // Featured products
+&sort=popularity,price,rating,name,date // Sort options
+&order=asc,desc                  // Sort direction
+&page=1&limit=20                 // Pagination
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-filter"></i> Available Filter Options</h5>
+                        <ul>
+                            <li><strong>Categories:</strong> fabric, tools, patterns, accessories, threads, buttons</li>
+                            <li><strong>Materials:</strong> cotton, silk, wool, polyester, linen, chiffon, satin</li>
+                            <li><strong>Colors:</strong> red, blue, green, yellow, black, white, navy, pink, purple</li>
+                            <li><strong>Sizes:</strong> XS, S, M, L, XL, XXL, custom</li>
+                            <li><strong>Brands:</strong> al-khayata, premium, traditional, modern, imported</li>
+                            <li><strong>Sort Options:</strong> popularity, price, rating, name, date, stock</li>
+                            <li><strong>Special Filters:</strong> on_sale, new_arrivals, featured, bestsellers</li>
+                        </ul>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"products"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">201</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Premium Cotton Fabric - Navy Blue"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"High-quality 100% cotton fabric perfect for traditional garments"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">125.50</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>,
+        <span class="json-key">"stock_quantity"</span>: <span class="json-number">45</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"Fabric"</span>,
+        <span class="json-key">"images"</span>: [
+          <span class="json-string">"/web/image/product.product/201/image_1920"</span>
+        ],
+        <span class="json-key">"rating"</span>: <span class="json-number">4.7</span>,
+        <span class="json-key">"reviews_count"</span>: <span class="json-number">89</span>
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">12</span>,
+      <span class="json-key">"total_products"</span>: <span class="json-number">235</span>
+    }
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> product.product, product.template, stock.quant</li>
+                            <li><strong>Inventory Management:</strong> Real-time stock levels and availability</li>
+                            <li><strong>Pricing:</strong> Dynamic pricing with discounts and promotions</li>
+                            <li><strong>Categories:</strong> Hierarchical product categorization</li>
+                        </ul>
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 12px; border-left: 4px solid #22c55e;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-shopping-cart" style="margin-right: 10px; color: #22c55e;"></i>
+                            UI Design Reference - E-Commerce Shop Interface
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                                    <img src="Bayt Alkhyata/Shop.png" alt="Shop Interface" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                    <img src="Bayt Alkhyata/Cart.png" alt="Shopping Cart" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                    <img src="Bayt Alkhyata/Payment.png" alt="Payment Process" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                    <img src="Bayt Alkhyata/Payment Success.png" alt="Payment Success" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                </div>
+                                <p style="margin: 10px 0 0 0; color: #718096; font-weight: 500; font-size: 0.9rem;">E-Commerce Shop Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Product Catalog:</strong> product.template with variants</li>
+                                    <li><strong>Shopping Cart:</strong> sale.order in draft state</li>
+                                    <li><strong>Inventory:</strong> stock.quant for real-time availability</li>
+                                    <li><strong>Payment Gateway:</strong> payment.provider integration</li>
+                                    <li><strong>Order Management:</strong> sale.order workflow</li>
+                                    <li><strong>Shipping:</strong> delivery.carrier for logistics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to Cart API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Add Product to Cart
+                    </h4>
+                    <div class="endpoint-url">/api/v1/cart/add</div>
+                    
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"product_id"</span>: <span class="json-number">201</span>,
+  <span class="json-key">"quantity"</span>: <span class="json-number">2</span>,
+  <span class="json-key">"variant_options"</span>: {
+    <span class="json-key">"color"</span>: <span class="json-string">"Navy Blue"</span>,
+    <span class="json-key">"size"</span>: <span class="json-string">"Medium"</span>
+  }
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Product added to cart successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"cart_item_id"</span>: <span class="json-number">789</span>,
+    <span class="json-key">"cart_total_items"</span>: <span class="json-number">3</span>,
+    <span class="json-key">"cart_total_amount"</span>: <span class="json-number">376.50</span>
+  }
+}
+                    </div>
+                </div>
+            </section>
+
+            <section id="points-rewards" class="section">
+                <h2><i class="fas fa-gift"></i> Points & Rewards APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Loyalty program management with points earning, redemption, referral system, and rewards catalog.
+                </p>
+
+                <!-- Get User Points API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get User Points & Referral Data
+                    </h4>
+                    <div class="endpoint-url">/api/v1/points</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve user's current points balance, referral statistics, and recent points transactions.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"points_balance"</span>: <span class="json-number">1250</span>,
+    <span class="json-key">"referral_code"</span>: <span class="json-string">"FATIMA123"</span>,
+    <span class="json-key">"referral_stats"</span>: {
+      <span class="json-key">"total_referrals"</span>: <span class="json-number">8</span>,
+      <span class="json-key">"successful_referrals"</span>: <span class="json-number">6</span>,
+      <span class="json-key">"referral_earnings"</span>: <span class="json-number">300</span>
+    },
+    <span class="json-key">"recent_transactions"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">501</span>,
+        <span class="json-key">"type"</span>: <span class="json-string">"earned"</span>,
+        <span class="json-key">"amount"</span>: <span class="json-number">50</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Course completion bonus"</span>,
+        <span class="json-key">"date"</span>: <span class="json-string">"2024-01-15T14:30:00Z"</span>
+      }
+    ]
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> loyalty.program, loyalty.card, loyalty.rule</li>
+                            <li><strong>Points System:</strong> Automated points calculation and tracking</li>
+                            <li><strong>Referral Management:</strong> Unique code generation and tracking</li>
+                            <li><strong>Transaction History:</strong> Detailed audit trail of all point activities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Redeem Points API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Redeem Points for Discount
+                    </h4>
+                    <div class="endpoint-url">/api/v1/points/redeem</div>
+                    
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"points_amount"</span>: <span class="json-number">500</span>,
+  <span class="json-key">"redemption_type"</span>: <span class="json-string">"discount_coupon"</span>,
+  <span class="json-key">"target_purchase"</span>: <span class="json-string">"course"</span>
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Points redeemed successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"coupon_code"</span>: <span class="json-string">"POINTS500OFF"</span>,
+    <span class="json-key">"discount_amount"</span>: <span class="json-number">50</span>,
+    <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>,
+    <span class="json-key">"expires_at"</span>: <span class="json-string">"2024-02-16T23:59:59Z"</span>,
+    <span class="json-key">"remaining_points"</span>: <span class="json-number">750</span>
+  }
+}
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-radius: 12px; border-left: 4px solid #ec4899;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-gift" style="margin-right: 10px; color: #ec4899;"></i>
+                            UI Design Reference - Points & Rewards Interface
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                                    <img src="Bayt Alkhyata/Karma Point.png" alt="Karma Points" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                    <img src="Bayt Alkhyata/Level.png" alt="User Level" style="max-width: 150px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto;">
+                                </div>
+                                <img src="Bayt Alkhyata/Profile.png" alt="User Profile" style="max-width: 300px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto 10px auto;">
+                                <p style="margin: 0; color: #718096; font-weight: 500; font-size: 0.9rem;">Points & Rewards System Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Loyalty Program:</strong> loyalty.program for points system</li>
+                                    <li><strong>Points Tracking:</strong> loyalty.card for user balances</li>
+                                    <li><strong>Rewards Catalog:</strong> loyalty.reward for redemption options</li>
+                                    <li><strong>Referral System:</strong> Custom referral code generation</li>
+                                    <li><strong>Coupon Management:</strong> coupon.coupon for discounts</li>
+                                    <li><strong>Transaction History:</strong> loyalty.history for audit trail</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="community" class="section">
+                <h2><i class="fas fa-users"></i> Community/Blog & Reels APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Social features including blog posts, community discussions, reels, and user-generated content with engagement tracking.
+                </p>
+
+                <!-- Get Community Posts API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get Community Posts
+                    </h4>
+                    <div class="endpoint-url">/api/v1/community</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve paginated community posts and blog articles with engagement metrics and filtering options.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Query Parameters</h5>
+                    <div class="code-block">
+// Basic Filtering
+?category=tips&sort=recent&page=1&limit=10&include_comments=true
+
+// Advanced Filtering Options
+?search=buttonhole                // Search in title and content
+&category=tips,tutorials,showcase // Multiple categories
+&author_id=123                   // Filter by specific author
+&tag=beginner,advanced,technique // Tag-based filtering
+&date_from=2024-01-01           // Date range start
+&date_to=2024-12-31             // Date range end
+&min_likes=10                   // Minimum likes filter
+&has_images=true                // Posts with images only
+&featured=true                  // Featured posts only
+&language=ar,en                 // Language preference
+&sort=recent,popular,likes,comments,views // Sort options
+&order=asc,desc                 // Sort direction
+&include_comments=true          // Include comments in response
+&include_author_details=true    // Include full author info
+&page=1&limit=10               // Pagination
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-filter"></i> Available Filter Options</h5>
+                        <ul>
+                            <li><strong>Categories:</strong> tips, tutorials, showcase, questions, discussions, news</li>
+                            <li><strong>Tags:</strong> beginner, intermediate, advanced, technique, pattern, fabric, tools</li>
+                            <li><strong>Languages:</strong> ar (Arabic), en (English)</li>
+                            <li><strong>Sort Options:</strong> recent, popular, likes, comments, views, alphabetical</li>
+                            <li><strong>Special Filters:</strong> featured, trending, has_images, has_videos, answered</li>
+                        </ul>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"posts"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">301</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"5 Essential Tips for Perfect Buttonholes"</span>,
+        <span class="json-key">"content"</span>: <span class="json-string">"Creating perfect buttonholes is a skill every seamstress should master..."</span>,
+        <span class="json-key">"author"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">123</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Fatima Al-Zahra"</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.partner/123/image_128"</span>
+        },
+        <span class="json-key">"published_date"</span>: <span class="json-string">"2024-01-15T09:00:00Z"</span>,
+        <span class="json-key">"category"</span>: <span class="json-string">"Tips & Techniques"</span>,
+        <span class="json-key">"likes_count"</span>: <span class="json-number">45</span>,
+        <span class="json-key">"comments_count"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"featured_image"</span>: <span class="json-string">"/web/image/blog.post/301/image_1920"</span>
+      }
+    ],
+    <span class="json-key">"pagination"</span>: {
+      <span class="json-key">"current_page"</span>: <span class="json-number">1</span>,
+      <span class="json-key">"total_pages"</span>: <span class="json-number">8</span>,
+      <span class="json-key">"total_posts"</span>: <span class="json-number">76</span>
+    }
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> blog.post, blog.tag, mail.message</li>
+                            <li><strong>Content Management:</strong> Rich text editor with media embedding</li>
+                            <li><strong>Moderation:</strong> Content approval workflow and spam detection</li>
+                            <li><strong>SEO:</strong> Meta tags and social media sharing optimization</li>
+                        </ul>
+                    </div>
+
+                    <!-- UI Mockup Section -->
+                    <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 12px; border-left: 4px solid #f59e0b;">
+                        <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                            <i class="fas fa-users" style="margin-right: 10px; color: #f59e0b;"></i>
+                            UI Design Reference - Community & Blog Interface
+                        </h5>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 20px; text-align: center; min-height: 200px; display: flex; flex-direction: column; justify-content: center;">
+                                <img src="Bayt Alkhyata/Forum Discussion.png" alt="Forum Discussion" style="max-width: 300px; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin: 0 auto 10px auto;">
+                                <p style="margin: 0; color: #718096; font-weight: 500; font-size: 0.9rem;">Community & Blog Interface Design</p>
+                            </div>
+                            <div class="implementation-details">
+                                <h6 style="margin: 0 0 15px 0; color: #2d3748;">Odoo v18 Implementation</h6>
+                                <ul style="margin: 0; padding-left: 20px; color: #4a5568; line-height: 1.6;">
+                                    <li><strong>Blog System:</strong> blog.post for articles and content</li>
+                                    <li><strong>Social Feed:</strong> mail.message for community posts</li>
+                                    <li><strong>Media Management:</strong> ir.attachment for images/videos</li>
+                                    <li><strong>User Engagement:</strong> mail.followers for subscriptions</li>
+                                    <li><strong>Comments System:</strong> mail.message threading</li>
+                                    <li><strong>Content Moderation:</strong> Custom approval workflows</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Get Reels Feed API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get Reels Feed
+                    </h4>
+                    <div class="endpoint-url">/api/v1/reels</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve personalized short video feed with engagement metrics and infinite scroll pagination.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"reels"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">401</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Quick Hem Technique"</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Learn this amazing hem technique in under 60 seconds!"</span>,
+        <span class="json-key">"video_url"</span>: <span class="json-string">"/web/content/ir.attachment/401/datas"</span>,
+        <span class="json-key">"thumbnail_url"</span>: <span class="json-string">"/web/image/ir.attachment/401/thumbnail"</span>,
+        <span class="json-key">"duration"</span>: <span class="json-number">45</span>,
+        <span class="json-key">"creator"</span>: {
+          <span class="json-key">"id"</span>: <span class="json-number">125</span>,
+          <span class="json-key">"name"</span>: <span class="json-string">"Amira Hassan"</span>,
+          <span class="json-key">"avatar"</span>: <span class="json-string">"/web/image/res.partner/125/image_128"</span>
+        },
+        <span class="json-key">"engagement"</span>: {
+          <span class="json-key">"likes_count"</span>: <span class="json-number">342</span>,
+          <span class="json-key">"shares_count"</span>: <span class="json-number">28</span>,
+          <span class="json-key">"views_count"</span>: <span class="json-number">1250</span>,
+          <span class="json-key">"user_liked"</span>: <span class="json-boolean">false</span>
+        }
+      }
+    ]
+  }
+}
+                    </div>
+                </div>
+            </section>
+
+            <section id="static-pages" class="section">
+                <h2><i class="fas fa-file-alt"></i> Static Pages & Information APIs</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Content management APIs for static pages including About Us, Help Center, Terms & Conditions, and other informational content.
+                </p>
+
+                <!-- Get About Page API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get About Us Information
+                    </h4>
+                    <div class="endpoint-url">/api/v1/info/about</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve comprehensive information about Bayt AlKhyata including company history, mission, vision, and team members.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"page_info"</span>: {
+      <span class="json-key">"title"</span>: <span class="json-string">"About Bayt AlKhyata"</span>,
+      <span class="json-key">"last_updated"</span>: <span class="json-string">"2024-01-10T12:00:00Z"</span>
+    },
+    <span class="json-key">"content"</span>: {
+      <span class="json-key">"mission"</span>: <span class="json-string">"To empower individuals with sewing and tailoring skills through comprehensive education"</span>,
+      <span class="json-key">"vision"</span>: <span class="json-string">"To become the leading platform for sewing education in the Middle East"</span>,
+      <span class="json-key">"story"</span>: <span class="json-string">"Founded in 2020, Bayt AlKhyata began as a small initiative..."</span>
+    },
+    <span class="json-key">"statistics"</span>: {
+      <span class="json-key">"students_enrolled"</span>: <span class="json-number">12500</span>,
+      <span class="json-key">"courses_available"</span>: <span class="json-number">85</span>,
+      <span class="json-key">"expert_instructors"</span>: <span class="json-number">25</span>
+    }
+  }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Odoo Integration</h5>
+                        <ul>
+                            <li><strong>Models:</strong> website.page, hr.employee, res.company</li>
+                            <li><strong>Content Management:</strong> Rich text editor with multilingual support</li>
+                            <li><strong>SEO Optimization:</strong> Meta tags and structured data</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Get Help Center API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get Help Center & Support
+                    </h4>
+                    <div class="endpoint-url">/api/v1/info/help-center</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve comprehensive help documentation including FAQs, tutorials, and contact support options.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"categories"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Getting Started"</span>,
+        <span class="json-key">"article_count"</span>: <span class="json-number">15</span>
+      }
+    ],
+    <span class="json-key">"popular_articles"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"How to Reset Your Password"</span>,
+        <span class="json-key">"views"</span>: <span class="json-number">2450</span>
+      }
+    ]
+  }
+}
+                    </div>
+                </div>
+
+                <!-- Get Terms & Conditions API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get Terms & Conditions
+                    </h4>
+                    <div class="endpoint-url">/api/v1/info/terms</div>
+                    
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve the complete terms and conditions document including user agreements and legal policies.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"document_info"</span>: {
+      <span class="json-key">"title"</span>: <span class="json-string">"Terms and Conditions"</span>,
+      <span class="json-key">"version"</span>: <span class="json-string">"2.1"</span>,
+      <span class="json-key">"effective_date"</span>: <span class="json-string">"2024-01-01T00:00:00Z"</span>
+    },
+    <span class="json-key">"sections"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Acceptance of Terms"</span>,
+        <span class="json-key">"content"</span>: <span class="json-string">"By accessing and using the Bayt AlKhyata platform..."</span>
+      }
+    ]
+  }
+}
+                    </div>
+                </div>
+            </section>
+
+            <section id="error-handling" class="section">
+                <h2><i class="fas fa-exclamation-triangle"></i> Error Handling & Response Guidelines</h2>
+                
+                <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+                    Comprehensive error handling guidelines and standardized response formats for consistent error reporting and debugging.
+                </p>
+
+                <!-- Standard Response Format -->
+                <div class="api-endpoint">
+                    <h4>Standard Response Format</h4>
+                    
+                    <div class="info-box">
+                        <h5>Success Response Structure</h5>
+                        <p>All successful API responses follow this consistent format:</p>
+                    </div>
+
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Operation completed successfully"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-comment">// Actual response data</span>
+  },
+  <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-16T12:00:00Z"</span>,
+  <span class="json-key">"request_id"</span>: <span class="json-string">"req_abc123def456"</span>
+}
+                    </div>
+
+                    <div class="info-box">
+                        <h5>Error Response Structure</h5>
+                        <p>All error responses follow this consistent format:</p>
+                    </div>
+
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"VALIDATION_ERROR"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"The provided data is invalid"</span>,
+    <span class="json-key">"details"</span>: {
+      <span class="json-key">"field"</span>: <span class="json-string">"phone_number"</span>,
+      <span class="json-key">"issue"</span>: <span class="json-string">"Invalid phone number format"</span>
+    }
+  },
+  <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-16T12:00:00Z"</span>,
+  <span class="json-key">"request_id"</span>: <span class="json-string">"req_abc123def456"</span>
+}
+                    </div>
+                </div>
+
+                <!-- HTTP Status Codes -->
+                <div class="api-endpoint">
+                    <h4>HTTP Status Codes</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px; margin: 20px 0;">
+                        <div class="error-codes">
+                            <h5 style="color: #22c55e; margin-bottom: 10px;">Success Codes (2xx)</h5>
+                            <div class="error-item">
+                                <span class="error-code" style="background: #22c55e;">200 OK</span>: Request successful
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code" style="background: #22c55e;">201 Created</span>: Resource created successfully
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code" style="background: #22c55e;">204 No Content</span>: Successful deletion
+                            </div>
+                        </div>
+
+                        <div class="error-codes">
+                            <h5 style="color: #f59e0b; margin-bottom: 10px;">Client Error Codes (4xx)</h5>
+                            <div class="error-item">
+                                <span class="error-code">400 Bad Request</span>: Invalid request data
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">401 Unauthorized</span>: Authentication required
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">403 Forbidden</span>: Access denied
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">404 Not Found</span>: Resource not found
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">422 Unprocessable Entity</span>: Validation failed
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">429 Too Many Requests</span>: Rate limit exceeded
+                            </div>
+                        </div>
+
+                        <div class="error-codes">
+                            <h5 style="color: #ef4444; margin-bottom: 10px;">Server Error Codes (5xx)</h5>
+                            <div class="error-item">
+                                <span class="error-code">500 Internal Server Error</span>: Server error
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">502 Bad Gateway</span>: Gateway error
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">503 Service Unavailable</span>: Service down
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application-Specific Error Codes -->
+                <div class="api-endpoint">
+                    <h4>Application-Specific Error Codes</h4>
+                    
+                    <div class="info-box">
+                        <h5>Authentication & User Management Errors</h5>
+                        <div class="error-codes">
+                            <div class="error-item">
+                                <span class="error-code">AUTH_001</span>: Invalid OTP code
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">AUTH_002</span>: OTP expired
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">AUTH_003</span>: Phone number already registered
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">AUTH_004</span>: Invalid phone number format
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">AUTH_005</span>: Account locked due to multiple failed attempts
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h5>E-Learning & Course Errors</h5>
+                        <div class="error-codes">
+                            <div class="error-item">
+                                <span class="error-code">COURSE_001</span>: Course not found
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">COURSE_002</span>: Already enrolled in course
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">COURSE_003</span>: Course enrollment limit reached
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">COURSE_004</span>: Insufficient permissions to access course
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h5>E-Commerce & Payment Errors</h5>
+                        <div class="error-codes">
+                            <div class="error-item">
+                                <span class="error-code">SHOP_001</span>: Product out of stock
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">SHOP_002</span>: Invalid product quantity
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">SHOP_003</span>: Payment processing failed
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">SHOP_004</span>: Cart is empty
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h5>Points & Rewards Errors</h5>
+                        <div class="error-codes">
+                            <div class="error-item">
+                                <span class="error-code">POINTS_001</span>: Insufficient points balance
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">POINTS_002</span>: Invalid referral code
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">POINTS_003</span>: Referral code already used
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Development Guidelines -->
+                <div class="api-endpoint">
+                    <h4>Security & Development Best Practices</h4>
+                    
+                    <div class="info-box">
+                        <h5><i class="fas fa-shield-alt"></i> Authentication & Authorization</h5>
+                        <ul>
+                            <li><strong>JWT Tokens:</strong> All API requests (except public endpoints) require valid JWT token in Authorization header</li>
+                            <li><strong>Token Format:</strong> <code>Authorization: Bearer {jwt_token}</code></li>
+                            <li><strong>Token Expiry:</strong> Access tokens expire in 1 hour, refresh tokens in 30 days</li>
+                            <li><strong>Rate Limiting:</strong> 100 requests per minute per user, 1000 per hour</li>
+                            <li><strong>HTTPS Only:</strong> All API communications must use HTTPS encryption</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Request Headers</h5>
+                        <div class="code-block">
+Content-Type: application/json
+Authorization: Bearer {jwt_token}
+Accept: application/json
+User-Agent: BaytAlKhyata-Mobile/1.0.0 (iOS/Android)
+X-Request-ID: {unique_request_id}
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-database"></i> Data Validation</h5>
+                        <ul>
+                            <li><strong>Input Sanitization:</strong> All user inputs are sanitized and validated</li>
+                            <li><strong>Phone Numbers:</strong> Must be in international format (+966XXXXXXXXX)</li>
+                            <li><strong>Passwords:</strong> Minimum 8 characters with uppercase, lowercase, and numbers</li>
+                            <li><strong>File Uploads:</strong> Maximum 10MB, allowed types: JPG, PNG, PDF, MP4</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h5><i class="fas fa-bug"></i> Error Logging & Debugging</h5>
+                        <ul>
+                            <li><strong>Request IDs:</strong> Each request includes unique ID for tracking</li>
+                            <li><strong>Error Logs:</strong> All errors logged with context and stack traces</li>
+                            <li><strong>Performance Monitoring:</strong> Response times and resource usage tracked</li>
+                            <li><strong>Debug Mode:</strong> Additional error details in development environment</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+
+        // Search functionality removed for PDF conversion
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+
+                // Update active nav link
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Highlight code syntax
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.innerHTML = block.innerHTML
+                .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
+                .replace(/: "([^"]+)"/g, ': <span class="json-string">"$1"</span>')
+                .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
+                .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
+        });
+    </script>
+
+    <!-- Attribution Footer -->
+    <footer style="margin-top: 50px; padding: 30px 0; border-top: 2px solid #e2e8f0; text-align: center; background: rgb(255, 149, 0); color: white;">
+        <div style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+            <h3 style="margin: 0 0 15px 0; font-size: 1.5rem; font-weight: 600;">
+                <i class="fas fa-code"></i> API Documentation
+            </h3>
+            <p style="margin: 0 0 10px 0; font-size: 1.1rem; opacity: 0.9;">
+                Comprehensive API Documentation for Bayt AlKhyata Mobile Application
+            </p>
+            <p style="margin: 0; font-size: 1rem; opacity: 0.8;">
+                <i class="fas fa-user-tie"></i> <strong>Prepared by:</strong> Yousif Frrag
+            </p>
+            <p style="margin: 5px 0 0 0; font-size: 0.9rem; opacity: 0.7;">
+                Integration with Odoo ERP v18 • Mobile App Development • API Design
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
