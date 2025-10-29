@@ -403,6 +403,40 @@
                         </ul>
                     </div>
 
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Error Response - Mobile Number Not Found (404)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Mobile number not registered"</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"PHONE_NOT_FOUND"</span>,
+    <span class="json-key">"details"</span>: <span class="json-string">"This mobile number is not associated with any account. Please check the number or register a new account."</span>,
+    <span class="json-key">"suggested_action"</span>: <span class="json-string">"redirect_to_register"</span>
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"request_id"</span>: <span class="json-string">"req_xyz789"</span>
+  }
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Error Response - Invalid Password (401)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Invalid password"</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"INVALID_PASSWORD"</span>,
+    <span class="json-key">"details"</span>: <span class="json-string">"The password provided is incorrect. Please try again or reset your password."</span>,
+    <span class="json-key">"suggested_action"</span>: <span class="json-string">"forgot_password"</span>
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"request_id"</span>: <span class="json-string">"req_mno456"</span>
+  }
+}
+                    </div>
+
                     <!-- UI Mockup Section -->
                     <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border-left: 4px solid #4299e1;">
                         <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
@@ -476,6 +510,40 @@
       <span class="json-key">"refresh_token"</span>: <span class="json-string">"refresh_token_here"</span>,
       <span class="json-key">"expires_in"</span>: <span class="json-number">3600</span>
     }
+  }
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Error Response - Mobile Number Already Exists (409)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Mobile number already registered"</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"PHONE_EXISTS"</span>,
+    <span class="json-key">"details"</span>: <span class="json-string">"This mobile number is already associated with an existing account. Please use a different number or try logging in."</span>,
+    <span class="json-key">"suggested_action"</span>: <span class="json-string">"redirect_to_login"</span>
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"request_id"</span>: <span class="json-string">"req_abc123"</span>
+  }
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Error Response - Invalid OTP (400)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Invalid or expired OTP code"</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"INVALID_OTP"</span>,
+    <span class="json-key">"details"</span>: <span class="json-string">"The OTP code provided is incorrect or has expired. Please request a new code."</span>,
+    <span class="json-key">"suggested_action"</span>: <span class="json-string">"resend_otp"</span>
+  },
+  <span class="json-key">"meta"</span>: {
+    <span class="json-key">"timestamp"</span>: <span class="json-string">"2024-01-15T10:30:00Z"</span>,
+    <span class="json-key">"request_id"</span>: <span class="json-string">"req_def456"</span>
   }
 }
                     </div>
@@ -1485,6 +1553,18 @@
                             <div class="error-item">
                                 <span class="error-code">AUTH_005</span>: Account locked due to multiple failed attempts
                             </div>
+                            <div class="error-item">
+                                <span class="error-code">PHONE_EXISTS</span>: Mobile number already registered (use during registration)
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">PHONE_NOT_FOUND</span>: Mobile number not found (use during login)
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">INVALID_OTP</span>: Invalid OTP verification code
+                            </div>
+                            <div class="error-item">
+                                <span class="error-code">INVALID_PASSWORD</span>: Incorrect password provided
+                            </div>
                         </div>
                     </div>
 
@@ -1592,8 +1672,11 @@ X-Request-ID: {unique_request_id}
         
 
     <script>
-        // Set current date
-        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+        // Set current date (check if element exists first)
+        const currentDateElement = document.getElementById('currentDate');
+        if (currentDateElement) {
+            currentDateElement.textContent = new Date().toLocaleDateString();
+        }
 
         // Search functionality removed for PDF conversion
 
