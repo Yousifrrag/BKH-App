@@ -101,6 +101,13 @@
             color: white;
         }
 
+        .nav-link.completed::after {
+            content: ' ✔';
+            color: #22c55e;
+            font-weight: 700;
+            margin-left: 4px;
+        }
+
         .content {
             padding: 40px 20px;
         }
@@ -159,34 +166,35 @@
         .method-delete { background: #ef4444; color: white; }
 
         .endpoint-url {
-            background: #1e293b;
-            color: #ffffff;
+            background: #1e1e1e; /* VS Code Dark+ */
+            color: #d4d4d4;
             padding: 12px 16px;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             font-size: 1rem;
             margin-bottom: 20px;
-            border-left: 4px solid #FF6B35;
+            border-left: 4px solid #007acc; /* VS Code accent */
         }
 
         .code-block {
-            background: #1e293b;
-            color: #e2e8f0;
+            background: #1e1e1e; /* VS Code Dark+ */
+            color: #d4d4d4; /* default editor text */
             padding: 20px;
             border-radius: 8px;
             font-family: 'Courier New', monospace;
             font-size: 0.9rem;
             overflow-x: auto;
             margin: 15px 0;
-            border-left: 4px solid #64ffda;
+            border-left: 4px solid #007acc; /* VS Code accent */
             position: relative;
         }
 
-        .json-key { color: #CF5227; }
-        .json-string { color: #a7f3d0; }
-        .json-number { color: #fbbf24; }
-        .json-boolean { color: #f87171; }
-        .json-comment { color: #9ca3af; font-style: italic; }
+        /* VS Code Dark+ token colors */
+        .json-key { color: #9cdcfe; }
+        .json-string { color: #ce9178; }
+        .json-number { color: #b5cea8; }
+        .json-boolean { color: #569cd6; }
+        .json-comment { color: #6a9955; font-style: italic; }
 
         .info-box {
             background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
@@ -212,6 +220,9 @@
             margin-bottom: 8px;
             color: #0f172a;
         }
+
+        /* Show mockup placeholders and regular content images */
+        /* (No global image suppression to ensure screenshots render) */
 
         /* Search functionality removed for PDF conversion */
 
@@ -243,6 +254,33 @@
             text-align: center;
         }
 
+        /* Unified sizing for UI reference images */
+        .ui-grid-img {
+            max-height: 220px;
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        /* Global image sizing to prevent oversize visuals */
+        .content img {
+            max-width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+        }
+        .mockup-placeholder img {
+            max-width: 100%;
+            height: auto;
+            max-height: 260px;
+            object-fit: contain;
+        }
+        .mockup-placeholder .img-large {
+            max-height: 380px;
+        }
+
         @media (max-width: 768px) {
             .header h1 { font-size: 2rem; }
             .header p { font-size: 1rem; }
@@ -258,14 +296,18 @@
         <header class="header">
             <h1><i class="fas fa-code"></i> Bayt AlKhyata API Documentation</h1>
             <p>Complete Integration Guide for Mobile App with Odoo ERP v18</p>
+            <div style="margin-top:12px; position:relative; z-index:1;">
+                <a href="https://www.figma.com/design/K0TSQH4rb5kC41Lav0YElK/Bayt-Alkhyata?node-id=0-1&p=f&t=6JuV6oYbSSzWPeHD-0" target="_blank" rel="noopener" style="color:#ffffff; text-decoration:underline;">
+                    Figma – Bayt AlKhyata (Design System)
+                </a>
+            </div>
         </header>
 
         <nav class="nav-container">
             <div class="nav">
                 <a href="#overview" class="nav-link active">Overview</a>
                 <a href="#authentication" class="nav-link">Authentication</a>
-                <a href="#elearning" class="nav-link">E-Learning</a>
-                <a href="#ecommerce" class="nav-link">E-Commerce</a>
+                <a href="#home-elearning" class="nav-link">Home / E-Learning</a>
                 <a href="#points-rewards" class="nav-link">Points & Rewards</a>
                 <a href="#community" class="nav-link">Community</a>
                 <a href="#static-pages" class="nav-link">Static Pages</a>
@@ -306,6 +348,277 @@
                         <li><strong>Data Format:</strong> JSON request/response with consistent error handling</li>
                         <li><strong>Mobile Optimization:</strong> Optimized for mobile networks and offline capabilities</li>
                     </ul>
+                </div>
+            </section>
+
+            <!-- Home Page Section -->
+<section id="home-page" class="section">
+                <h2><i class="fas fa-home"></i> Home Page</h2>
+                <p style="font-size: 1.05rem; margin-bottom: 20px; color: #4a5568;">
+                    Overview of the Home page UI and data sources, including displaying the signed-in user's name and profile picture, featured content, and quick actions.
+                </p>
+
+                <div class="api-endpoint">
+                    <h4>Get Home User Summary</h4>
+                    <div class="endpoint-url">/api/v1/home/user-summary</div>
+                    <p>Returns the signed-in user's basic info for the Home header.</p>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Auth</h5>
+                    <div class="code-block">Bearer JWT</div>
+
+                <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"name"</span>: <span class="json-string">"User Name"</span>,
+    <span class="json-key">"profile_picture"</span>: <span class="json-string">"/web/image/res.users/123/image_1920"</span>,
+    <span class="json-key">"points"</span>: <span class="json-number">245</span>,
+    <span class="json-key">"level"</span>: <span class="json-string">"Silver"</span>
+  }
+}
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Error Response (401)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"AUTH_REQUIRED"</span>,
+    <span class="json-key">"details"</span>: <span class="json-string">"Login required to load Home user summary."</span>
+  }
+}
+                </div>
+                <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"SERVICE_UNAVAILABLE"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Featured feed unavailable"</span>
+  }
+}
+                </div>
+            </div>
+
+                <!-- UI Mockup Section -->
+                <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); border-radius: 12px; border-left: 4px solid #4299e1;">
+                    <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                        <i class="fas fa-images" style="margin-right: 10px; color: #4299e1;"></i>
+                        Home Page UI References
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start;">
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Home.png" alt="Home Page" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Main Home Page</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image1.png" alt="Word Extracted 1" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 1</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image2.png" alt="Word Extracted 2" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 2</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image3.png" alt="Word Extracted 3" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 3</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image4.png" alt="Word Extracted 4" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 4</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image5.png" alt="Word Extracted 5" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 5</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image6.png" alt="Word Extracted 6" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 6</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image7.png" alt="Word Extracted 7" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 7</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image8.png" alt="Word Extracted 8" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 8</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image9.png" alt="Word Extracted 9" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 9</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image10.png" alt="Word Extracted 10" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 10</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image11.png" alt="Word Extracted 11" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 11</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image12.png" alt="Word Extracted 12" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 12</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img src="Bayt%20Alkhyata/New%20Requriments/Extracted/image13.png" alt="Word Extracted 13" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Home User Info Extract 13</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px; color: #4a5568;">
+                        <ul style="margin: 0; padding-left: 18px; line-height: 1.7;">
+                            <li><strong>User Header:</strong> Displays user's <em>name</em>, <em>profile picture</em>, points, and level.</li>
+                            <li><strong>Featured Content:</strong> Highlights trending courses and announcements.</li>
+                            <li><strong>Quick Actions:</strong> Shortcuts to <em>My Courses</em>, <em>Shop</em>, and <em>Community</em>.</li>
+                            <li><strong>Personalization:</strong> Uses the <code>/home/user-summary</code> API to render the header instantly.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Instructor Profile API (Separate) -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Instructor Profile
+                    </h4>
+                    <div class="endpoint-url">/api/v1/instructors/{id}</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return instructor details including name, qualifications, image, and stats for the Teacher Profile tab.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"id"</span>: <span class="json-number">55</span>,
+    <span class="json-key">"name"</span>: <span class="json-string">"Amira Hassan"</span>,
+    <span class="json-key">"qualifications"</span>: <span class="json-string">"Certified tailoring instructor; 10+ years experience"</span>,
+    <span class="json-key">"bio"</span>: <span class="json-string">"Passionate about teaching sewing fundamentals and advanced techniques."</span>,
+    <span class="json-key">"image"</span>: <span class="json-string">"/web/image/hr.employee/55/image_1920"</span>,
+    <span class="json-key">"courses_count"</span>: <span class="json-number">8</span>,
+    <span class="json-key">"rating"</span>: <span class="json-number">4.7</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Expose minimal fields in course lists; use this endpoint for full instructor details.</li>
+                            <li>Images sourced from <code>hr.employee</code> records.</li>
+                            <li>Include localized labels for qualifications; support rich bios.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Additional Technical Points (Verbatim) -->
+                <div class="info-box" style="border: 1px solid #e2e8f0; background: #f7fafc; border-radius: 6px; padding: 14px; margin-top: 18px;">
+                    <h5 style="margin: 0 0 10px 0; color: #2d3748;">BKH API – Additional Technical Points to Include</h5>
+                    <div style="font-size: 14px; color: #2d3748; line-height: 1.6;">
+                        <p><strong>Home Page User Info</strong><br>API to get the user’s name and profile picture for display on the home page.</p>
+                        <p><strong>Course Progress</strong><br>The API should return the last active course progress based on completed sessions vs total sessions.<br>Example text:<br>“You have completed 3 of 10 sessions.”</p>
+                        <p><strong>Featured Courses (دورات مميزة)</strong><br>This section should only fetch Free-only courses.</p>
+                        <p><strong>Product Category / Level API</strong><br>API should return the following for each Level:<br>Category picture<br>Level name<br>Level price<br>Rating<br>Free/Paid status<br>Level description</p>
+                        <p><strong>Community User Levels (Hold)</strong><br>Each user in the community should have a Level, and each Level has an icon.<br>(Feature is on Hold, but the API must be documented.)</p>
+                        <p><strong>Filtering Options API</strong><br>Add filtering options specifically for courses.</p>
+                        <p><strong>Course Details API</strong><br>Each course should have:<br>Description<br>Title<br>Number of sessions<br>Total hours<br>Level<br>Teacher name, qualifications, and teacher image (via separate API)</p>
+                        <p><strong>Lessons API (Separate Endpoint)</strong><br>The Lessons tab should:<br>Return all lectures<br>Include total sessions<br>Return level<br>Indicate session availability (free/paid)<br>Lock paid sessions until payment is completed<br>Return the estimated time of each session<br>Be a separate API</p>
+                        <p><strong>FAQ Tab API</strong><br>The “التقييمات” tab name will be changed to "FAQ".<br>API should return the Frequently Asked Questions for each course.<br>(Separate endpoint.)</p>
+                        <p><strong>Course Purchase Workflow</strong><br>“Start Now” button sends the user directly to the Cart.<br>Introduction video is static for all courses.<br>Price is dynamic.<br>Wishlist button must save the course to the user Wishlist.</p>
+                        <p><strong>Cart API Requirements</strong><br>For service-type products (courses), quantity selection should not appear.<br>Promo codes must be supported.<br>Return:<br>Original price<br>Discount<br>Final price<br>Total amount to pay<br>Button to continue to payment.</p>
+                        <p><strong>Full Course Content API</strong><br>API must return all course content and all sessions (lessons) so the mobile app can recall it anytime.</p>
+                    </div>
+                </div>
+
+                <!-- Course Purchase Workflow (On Hold) -->
+                <div class="info-box" style="border: 1px dashed #cbd5e0; background: #f8fafc; border-radius: 6px; padding: 14px; margin-top: 16px;">
+                    <h5 style="margin: 0 0 10px 0; color: #2b6cb0;">Course Purchase Workflow (On Hold)</h5>
+                    <ul style="margin: 0; padding-left: 18px;">
+                        <li>“Start Now” navigates to Cart.</li>
+                        <li>Introduction video is static for all courses.</li>
+                        <li>Price is dynamic and shown per course.</li>
+                        <li>Wishlist saves course via <code>POST /api/v1/wishlist</code>.</li>
+                    </ul>
+                    <div style="margin-top: 10px;">
+                        <div class="api-line"><span class="label">Cart Endpoints (documented, on hold):</span></div>
+                        <div class="api-line"><code>POST /api/v1/cart/add</code> — Add course to cart (no quantity for service-type).</div>
+                        <div class="api-line"><code>POST /api/v1/cart/apply-promo</code> — Apply promo code.</div>
+                        <div class="api-line"><code>GET /api/v1/cart</code> — Retrieve cart with pricing breakdown.</div>
+                        <div class="api-line"><code>POST /api/v1/cart/checkout</code> — Continue to payment.</div>
+                        <pre class="code" style="white-space: pre-wrap; margin-top: 8px;">{
+  "items": [{ "course_id": 101, "title": "Beginner Sewing" }],
+  "pricing": {
+    "original_price": 199.00,
+    "discount": 50.00,
+    "final_price": 149.00,
+    "total_amount": 149.00
+  },
+  "actions": { "continue_to_payment": true }
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            
+
+
+            <!-- Courses Cycle Section -->
+<section id="courses-cycle" class="section" style="display:none;">
+                <h2><i class="fas fa-graduation-cap"></i> Courses Cycle</h2>
+                <p style="font-size: 1.05rem; margin-bottom: 20px; color: #4a5568;">
+                    End-to-end flow of discovering, enrolling, learning, practicing, and completing courses in the app.
+                </p>
+
+                <!-- UI Mockup Section -->
+                <div class="ui-mockup-section" style="margin: 30px 0; padding: 25px; background: linear-gradient(135deg, #f0f9ff 0%, #dbeafe 100%); border-radius: 12px; border-left: 4px solid #3b82f6;">
+                    <h5 style="margin: 0 0 20px 0; color: #2d3748; display: flex; align-items: center;">
+                        <i class="fas fa-route" style="margin-right: 10px; color: #3b82f6;"></i>
+                        Course Flow Visuals
+                    </h5>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: start;">
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Browsing courses.png" alt="Browse Courses" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Browse Courses</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/My Courses.png" alt="My Courses" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">My Courses</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Course Play-Full size.png" alt="Course Player" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Play Course</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/First Quiz.png" alt="Quiz" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Quiz</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Cart.png" alt="Cart" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Cart</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Payment.png" alt="Payment" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Payment</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Payment Success.png" alt="Payment Success" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Payment Success</p>
+                        </div>
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                            <img src="Bayt Alkhyata/Forum Discussion.png" alt="Forum" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                            <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Forum Discussion</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px; color: #4a5568;">
+                        <ul style="margin: 0; padding-left: 18px; line-height: 1.7;">
+                            <li><strong>Discovery:</strong> Filter and browse available courses.</li>
+                            <li><strong>Enrollment:</strong> Join courses and track progress in <em>My Courses</em>.</li>
+                            <li><strong>Learning:</strong> Watch lessons, complete quizzes, and earn points.</li>
+                            <li><strong>Commerce:</strong> Add materials to cart, checkout, and confirm payment.</li>
+                            <li><strong>Community:</strong> Engage in discussions and share achievements.</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -697,7 +1010,91 @@
                 </div>
             </section>
 
-            <section id="elearning" class="section">
+<section id="home-elearning" class="section">
+    <h2><i class="fas fa-home"></i> Home / E‑Learning</h2>
+    <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
+        Consolidated Home and E‑Learning behaviors, endpoints, and UI references. 
+        Design reference: <a href="https://www.figma.com/design/K0TSQH4rb5kC41Lav0YElK/Bayt-Alkhyata?node-id=0-1&p=f&t=6JuV6oYbSSzWPeHD-0" target="_blank" rel="noopener">Figma – Bayt AlKhyata</a>.
+    </p>
+
+    <!-- Home Page – User Profile API -->
+    <div class="api-endpoint">
+        <h4>
+            <span class="method-badge method-get">GET</span>
+            Home User Summary
+        </h4>
+        <div class="endpoint-url">/api/v1/home/user-summary</div>
+        <div class="info-box">
+            <h5>Purpose</h5>
+            <p>Return the signed-in user's name and profile picture to show on the Home screen immediately after login.</p>
+        </div>
+        <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+        <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"user_name"</span>: <span class="json-string">"Yousif Frrag"</span>,
+    <span class="json-key">"profile_picture_url"</span>: <span class="json-string">"/web/image/res.partner/42/image_1920"</span>
+  }
+}
+        </div>
+        <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+        <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"UNAUTHENTICATED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Login required"</span>
+  }
+}
+        </div>
+        <div class="info-box">
+            <h5><i class="fas fa-code"></i> Developer Notes</h5>
+            <ul>
+                <li>Authentication required; unauthenticated requests return <code>UNAUTHENTICATED</code>.</li>
+                <li>Compute <code>user_name</code> from authentication claims: <code>first_name + last_name</code>. Fallback to email or phone when missing.</li>
+                <li>Payload is minimal: <code>user_name</code> and <code>profile_picture_url</code> for fast Home load.</li>
+                <li>When the user has no profile image, return a default placeholder (e.g., <code>/static/img/default-avatar.png</code>) and include <code>has_profile_image=false</code>.</li>
+                <li>Image URLs point to Odoo resources; support signed URLs when required.</li>
+                <li>Recommended cache TTL: 60–300 seconds; refresh on profile updates.</li>
+            </ul>
+        </div>
+                <div class="info-box">
+                    <h5>UI References</h5>
+                    <p style="margin-bottom: 10px;">Home screen examples from Figma:</p>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: start;">
+                        <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; min-height: 140px;">
+                    <img loading="lazy" class="ui-grid-img" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Home%20page.png" alt="Home Page" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                    <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.8rem;">Home Page</p>
+                </div>
+                <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; min-height: 140px;">
+                    <img loading="lazy" class="ui-grid-img" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Special%20Courses.png" alt="Featured Courses (Free-only)" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                    <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.8rem;">Featured Courses (Free-only)</p>
+                </div>
+                <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; min-height: 140px;">
+                    <img loading="lazy" class="ui-grid-img" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Progress%20in%20courses.png" alt="Course Progress" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                    <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.8rem;">Course Progress</p>
+                </div>
+                <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 10px; text-align: center; min-height: 140px;">
+                    <img loading="lazy" class="ui-grid-img" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Courses%20Levels.png" alt="Levels / Categories (Home)" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                    <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.8rem;">Levels / Categories</p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="info-box">
+        <h5>Start Now / Cart Integration</h5>
+        <p>“Start Now” adds the course to Cart and navigates to checkout. Introduction video is static; price is dynamic; Wishlist saves the course for the user.</p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-items: start;">
+            
+            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Cart.png" alt="Cart API Requirements" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Cart API Requirements</p>
+            </div>
+        </div>
+    </div>
                 <h2><i class="fas fa-graduation-cap"></i> E-Learning Module APIs</h2>
                 
                 <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
@@ -742,7 +1139,6 @@
                         <ul>
                             <li><strong>Categories:</strong> beginner, intermediate, advanced, professional</li>
                             <li><strong>Price Types:</strong> free, paid, premium</li>
-                            <li><strong>Languages:</strong> ar (Arabic), en (English)</li>
                             <li><strong>Sort Options:</strong> popularity, price, rating, date, duration, title</li>
                             <li><strong>Special Filters:</strong> has_certificate, recently_added, trending</li>
                         </ul>
@@ -758,11 +1154,17 @@
         <span class="json-key">"id"</span>: <span class="json-number">101</span>,
         <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
         <span class="json-key">"description"</span>: <span class="json-string">"Learn fundamental sewing skills from expert instructors"</span>,
-        <span class="json-key">"instructor"</span>: <span class="json-string">"Amira Hassan"</span>,
+        <span class="json-key">"instructor"</span>: {
+          <span class="json-key">"name"</span>: <span class="json-string">"Amira Hassan"</span>,
+          <span class="json-key">"image"</span>: <span class="json-string">"/web/image/hr.employee/55/image_1920"</span>
+        },
         <span class="json-key">"price"</span>: <span class="json-number">0</span>,
         <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>,
-        <span class="json-key">"duration_hours"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"course_time_hours"</span>: <span class="json-number">12</span>,
+        <span class="json-key">"sessions_count"</span>: <span class="json-number">24</span>,
         <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"is_free"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"content"</span>: <span class="json-string">"video"</span>,
         <span class="json-key">"enrolled_count"</span>: <span class="json-number">1250</span>,
         <span class="json-key">"rating"</span>: <span class="json-number">4.8</span>,
         <span class="json-key">"thumbnail"</span>: <span class="json-string">"/web/image/slide.channel/101/image_1920"</span>
@@ -847,10 +1249,563 @@
   }
 }
                     </div>
+                    <div class="info-box">
+                        <h5>Note</h5>
+                        <p>Paid enrollments and discount codes are on hold. Use free enrollments only.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"COURSE_NOT_FOUND"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Course does not exist"</span>
+  }
+}
+                    </div>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"PAID_COURSE_ON_HOLD"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Paid enrollments are currently disabled"</span>
+  }
+}
+                    </div>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"UNAUTHENTICATED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Login required"</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"INVALID_FILTER"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Unsupported filter parameter"</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"COURSE_NOT_FOUND"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Course does not exist"</span>
+  }
+}
+
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"UNAUTHENTICATED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Login required"</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"NO_FAQS"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"No FAQs available for this course"</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"COURSE_NOT_FOUND"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Course does not exist"</span>
+  }
+}
+
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"UNAUTHENTICATED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Login required"</span>
+  }
+}
+                    </div>
+                </div>
+
+                <!-- Course Progress Tracking API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Course Progress Tracking
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/progress</div>
+
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return last active course and session completion count for the signed-in user.</p>
+                    </div>
+
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"last_active_course"</span>: {
+      <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+      <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>
+    },
+    <span class="json-key">"total_sessions"</span>: <span class="json-number">24</span>,
+    <span class="json-key">"completed_sessions"</span>: <span class="json-number">12</span>,
+    <span class="json-key">"dynamic_text"</span>: <span class="json-string">"You have completed 3 of 10 sessions."</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"UNAUTHENTICATED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Login required"</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Auth required; returns progress for the current user only.</li>
+                            <li>Use aggregated queries for <code>total_sessions</code> and <code>completed_sessions</code> to avoid heavy joins.</li>
+                            <li>When no active course, return <code>last_active_course: null</code> and counts as <code>0</code>.</li>
+                            <li><code>dynamic_text</code> may be generated on client to support localized messaging.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Progress%20in%20courses.png" alt="Course Progress" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Course Progress</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Courses (Free Only) API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Featured Courses (Free)
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/featured?free_only=true</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return only free courses to populate the Featured section. Paid courses are excluded.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"courses"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">301</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Hand Sewing Essentials"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">0</span>,
+        <span class="json-key">"is_free"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"rating"</span>: <span class="json-number">4.6</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>
+      }
+    ]
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"COURSE_NOT_FOUND"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Course does not exist"</span>
+  }
+}
+
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"PAID_SESSION_LOCKED"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Purchase required to access this session"</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Enforce <code>free_only=true</code>; return only items with <code>price=0</code> or <code>is_free=true</code>.</li>
+                            <li>Recommended defaults: <code>limit=10</code>, sort by <code>rating desc</code> or <code>created_at desc</code>.</li>
+                            <li>Exclude courses that require purchase for first session to keep UX consistent.</li>
+                            <li>Include lightweight fields only (id, title, level, rating) to reduce payload.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Special%20Courses.png" alt="Featured Courses (Free-only)" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Featured Courses (Free-only)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Levels / Category Information API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Course Levels / Categories
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/levels</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return Level (Product Category) data for the Courses screen.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"levels"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">1</span>,
+        <span class="json-key">"name"</span>: <span class="json-string">"Beginner"</span>,
+        <span class="json-key">"image"</span>: <span class="json-string">"/web/image/product.category/1/image_1920"</span>,
+        <span class="json-key">"price"</span>: <span class="json-number">0</span>,
+        <span class="json-key">"rating"</span>: <span class="json-number">4.5</span>,
+        <span class="json-key">"is_free"</span>: <span class="json-boolean">true</span>,
+        <span class="json-key">"description"</span>: <span class="json-string">"Introductory level for new learners"</span>
+      }
+    ]
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Return dynamic lists built from DB, not hard-coded constants.</li>
+                            <li>Include special toggles: <code>has_certificate</code>, <code>recently_added</code>, <code>trending</code>, <code>on_sale</code>, <code>featured</code>, <code>bestsellers</code>.</li>
+                            <li>Support teacher filter by <code>teacher_id</code>; consider multi-select filters.</li>
+                            <li>Provide display labels localized for Arabic and English.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" class="no-scale" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Courses%20Levels.png" alt="Product Category / Level" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Product Category / Level</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Level images sourced from <code>product.category</code> resources.</li>
+                            <li>Include <code>description</code> and <code>is_free</code> flags for UI labels.</li>
+                            <li>Cache levels for 1 hour; update when admin edits categories.</li>
+                            <li>Consider returning <code>sort_order</code> to control display ordering.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Courses Filters API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Courses Filter Options
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/filters</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return filter options including Level, Category, Free/Paid, Duration, Rating, price , Level.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"levels"</span>: [<span class="json-string">"beginner"</span>, <span class="json-string">"intermediate"</span>, <span class="json-string">"advanced"</span>],
+    <span class="json-key">"categories"</span>: [<span class="json-string">"sewing"</span>, <span class="json-string">"tailoring"</span>, <span class="json-string">"embroidery"</span>],
+    <span class="json-key">"price_types"</span>: [<span class="json-string">"free"</span>, <span class="json-string">"paid"</span>],
+    <span class="json-key">"duration_hours"</span>: [<span class="json-number">0</span>, <span class="json-number">5</span>, <span class="json-number">10</span>, <span class="json-number">20</span>],
+    <span class="json-key">"rating"</span>: [<span class="json-number">3</span>, <span class="json-number">4</span>, <span class="json-number">5</span>],
+    <span class="json-key">"teachers"</span>: [<span class="json-string">"Amira Hassan"</span>, <span class="json-string">"Yousif Frrag"</span>]
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Denormalize core fields (sessions_count, total_duration_hours) to avoid extra queries.</li>
+                            <li>Return minimal teacher info inline; expose full profile via separate endpoint.</li>
+                            <li>Include <code>is_enrolled</code> and <code>is_free</code> flags where applicable.</li>
+                            <li>Video URLs should be signed or use CDN with expiration when required.</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+                <!-- Course Details API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Course Details
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/{id}</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return full course details including sessions count, total duration, level, and teacher info.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"id"</span>: <span class="json-number">101</span>,
+    <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+    <span class="json-key">"description"</span>: <span class="json-string">"Learn essential sewing skills."</span>,
+    <span class="json-key">"sessions_count"</span>: <span class="json-number">24</span>,
+    <span class="json-key">"total_duration_hours"</span>: <span class="json-number">12</span>,
+    <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+    <span class="json-key">"teacher"</span>: {
+      <span class="json-key">"name"</span>: <span class="json-string">"Amira Hassan"</span>,
+      <span class="json-key">"qualifications"</span>: <span class="json-string">"10+ years in tailoring and instruction"</span>,
+      <span class="json-key">"image"</span>: <span class="json-string">"/web/image/hr.employee/55/image_1920"</span>
+    },
+    <span class="json-key">"intro_video"</span>: <span class="json-string">"https://cdn.example.com/videos/intro.mp4"</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Return <code>locked</code> per session to indicate purchase requirement.</li>
+                            <li>Include <code>availability</code> values: <code>free</code> or <code>paid</code>.</li>
+                            <li>Optional fields: <code>video_length_sec</code>, <code>resources_count</code>, <code>quiz_available</code>.</li>
+                            <li>Support pagination when courses have many sessions.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Static%20Api%20when%20clicking%20more%20details%20about%20a%20course.png" alt="Course Details UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Course Details UI</p>
+                            </div>
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/about%20course.png" alt="Teacher Profile UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Teacher Profile UI (separate)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lessons (Sessions) API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Course Sessions
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/{id}/sessions</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return all sessions for a course with access restrictions for paid content.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"sessions"</span>: [
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">5001</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Introduction"</span>,
+        <span class="json-key">"availability"</span>: <span class="json-string">"free"</span>,
+        <span class="json-key">"estimated_time_min"</span>: <span class="json-number">15</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"locked"</span>: <span class="json-boolean">false</span>
+      },
+      {
+        <span class="json-key">"id"</span>: <span class="json-number">5002</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Stitching Basics"</span>,
+        <span class="json-key">"availability"</span>: <span class="json-string">"paid"</span>,
+        <span class="json-key">"estimated_time_min"</span>: <span class="json-number">30</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"locked"</span>: <span class="json-boolean">true</span>
+      }
+    ]
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Mark each session with <code>availability</code> (free/paid) and <code>locked</code> when purchase is required.</li>
+                            <li>Include <code>estimated_time_min</code> to show the expected duration.</li>
+                            <li>Return <code>level</code> per session for filtering and badges.</li>
+                            <li>Support pagination for long courses and stable IDs for offline caching.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/course%20sessions.png" alt="Lessons / Sessions UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Lessons UI (separate endpoint)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course FAQ API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Course FAQs
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/{id}/faqs</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return all FAQs related to the course (displayed in the FAQ tab). The “التقييمات” tab name will be changed to "FAQ".</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"faqs"</span>: [
+      {
+        <span class="json-key">"question"</span>: <span class="json-string">"Do I need prior experience?"</span>,
+        <span class="json-key">"answer"</span>: <span class="json-string">"No, beginner level is designed for newcomers."</span>
+      }
+    ]
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Return stable IDs for sections and sessions to enable offline caching.</li>
+                            <li>Include only identifiers in section <code>sessions</code> array; fetch details via sessions endpoint.</li>
+                            <li>Consider ETag support to reduce bandwidth when content is unchanged.</li>
+                            <li>Provide <code>last_updated_at</code> timestamp for cache invalidation.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Course%20FAQ.png" alt="Course FAQ UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">FAQ Tab UI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Full Course Content Retrieval API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Full Course Content
+                    </h4>
+                    <div class="endpoint-url">/api/v1/courses/{id}/content</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return complete course structure including all sessions, with stable IDs for offline caching.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"structure"</span>: {
+      <span class="json-key">"course_id"</span>: <span class="json-number">101</span>,
+      <span class="json-key">"sections"</span>: [
+        {
+          <span class="json-key">"id"</span>: <span class="json-number">9001</span>,
+          <span class="json-key">"title"</span>: <span class="json-string">"Basics"</span>,
+          <span class="json-key">"sessions"</span>: [<span class="json-number">5001</span>, <span class="json-number">5002</span>]
+        }
+      ]
+    }
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/about%20course.png" alt="Full Course Content UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Full Course Content UI</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Community – User Levels API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Community – User Levels
+                    </h4>
+                    <div class="endpoint-url">/api/v1/community/user-levels</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Return the level of each user in the community with its icon for display.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"users"</span>: [
+      {
+        <span class="json-key">"user_id"</span>: <span class="json-number">42</span>,
+        <span class="json-key">"full_name"</span>: <span class="json-string">"Yousif Frrag"</span>,
+        <span class="json-key">"level"</span>: <span class="json-string">"beginner"</span>,
+        <span class="json-key">"icon_url"</span>: <span class="json-string">"/web/image/product.category/1/image_1920"</span>
+      }
+    ]
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Levels are mapped per user; icons sourced from <code>product.category</code> or static assets.</li>
+                            <li>Support pagination and search by <code>name</code> and <code>level</code>.</li>
+                            <li>Return minimal fields for list view; fetch details lazily on profile tap.</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h5>UI References</h5>
+                        <div style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 12px; align-items: start;">
+                            <div class="mockup-placeholder" style="background: #ffffff; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center; min-height: 160px; display: flex; flex-direction: column;">
+                                <img loading="lazy" src="Bayt%20Alkhyata/New%20Requriments/unzipped/word/media/Community.png" alt="Community Levels UI" style="max-width: 100%; height: auto; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.08);">
+                                <p style="margin: 8px 0 0 0; color: #718096; font-weight: 500; font-size: 0.85rem;">Community Levels UI</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section id="ecommerce" class="section">
+<section id="ecommerce" class="section" style="display:none;">
                 <h2><i class="fas fa-shopping-cart"></i> E-Commerce / Shop APIs</h2>
                 
                 <p style="font-size: 1.05rem; margin-bottom: 25px; color: #4a5568;">
@@ -1011,6 +1966,192 @@
     <span class="json-key">"cart_total_amount"</span>: <span class="json-number">376.50</span>
   }
 }
+                    </div>
+                </div>
+
+                <!-- Wishlist API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Add Course to Wishlist
+                    </h4>
+                    <div class="endpoint-url">/api/v1/wishlist</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Save the selected course to the user's Wishlist for later purchase.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"course_id"</span>: <span class="json-number">101</span>
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (201)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Course added to wishlist"</span>
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"ALREADY_IN_WISHLIST"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Course already exists in wishlist"</span>
+  }
+}
+                    </div>
+                </div>
+
+                <!-- Add Course (Service) to Cart API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Add Course to Cart (Service Product)
+                    </h4>
+                    <div class="endpoint-url">/api/v1/cart/add</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Add a course as a service-type product to the cart. Quantity is not shown for services.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"product_id"</span>: <span class="json-number">9001</span> <span class="json-comment">// service product linked to course</span>,
+  <span class="json-key">"course_id"</span>: <span class="json-number">101</span>,
+  <span class="json-key">"product_type"</span>: <span class="json-string">"service"</span>
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"message"</span>: <span class="json-string">"Course added to cart"</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"cart_item_id"</span>: <span class="json-number">792</span>,
+    <span class="json-key">"cart_total_items"</span>: <span class="json-number">1</span>,
+    <span class="json-key">"cart_total_amount"</span>: <span class="json-number">199.00</span>,
+    <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>For service-type products (<code>product_type=service</code>), ignore or fix <code>quantity=1</code>.</li>
+                            <li>Link course to product via metadata (<code>course_id</code>) for analytics.</li>
+                            <li>Return updated cart totals for quick UI feedback.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply Promo Code API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Apply Promo Code
+                    </h4>
+                    <div class="endpoint-url">/api/v1/cart/apply-promo</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Apply a promo code to the current cart and return recalculated amounts.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Request Body</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"code"</span>: <span class="json-string">"WELCOME10"</span>
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"original_price"</span>: <span class="json-number">199.00</span>,
+    <span class="json-key">"discount_amount"</span>: <span class="json-number">19.90</span>,
+    <span class="json-key">"final_price"</span>: <span class="json-number">179.10</span>,
+    <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>
+  }
+}
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #c53030;">Error Responses</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">false</span>,
+  <span class="json-key">"error"</span>: {
+    <span class="json-key">"code"</span>: <span class="json-string">"INVALID_PROMO"</span>,
+    <span class="json-key">"message"</span>: <span class="json-string">"Promo code is invalid or expired"</span>
+  }
+}
+                    </div>
+                </div>
+
+                <!-- Get Cart API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-get">GET</span>
+                        Get Cart Details
+                    </h4>
+                    <div class="endpoint-url">/api/v1/cart</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Retrieve current cart items and totals. Service products do not display quantity controls.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"items"</span>: [
+      {
+        <span class="json-key">"type"</span>: <span class="json-string">"course"</span>,
+        <span class="json-key">"title"</span>: <span class="json-string">"Basic Sewing Techniques"</span>,
+        <span class="json-key">"unit_price"</span>: <span class="json-number">199.00</span>,
+        <span class="json-key">"subtotal"</span>: <span class="json-number">199.00</span>,
+        <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>
+      }
+    ],
+    <span class="json-key">"original_price"</span>: <span class="json-number">199.00</span>,
+    <span class="json-key">"discount_amount"</span>: <span class="json-number">19.90</span>,
+    <span class="json-key">"final_price"</span>: <span class="json-number">179.10</span>,
+    <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>
+  }
+}
+                    </div>
+                </div>
+
+                <!-- Checkout API -->
+                <div class="api-endpoint">
+                    <h4>
+                        <span class="method-badge method-post">POST</span>
+                        Checkout
+                    </h4>
+                    <div class="endpoint-url">/api/v1/cart/checkout</div>
+                    <div class="info-box">
+                        <h5>Purpose</h5>
+                        <p>Create a payment transaction and return payment URL or deep-link to gateway.</p>
+                    </div>
+                    <h5 style="margin: 20px 0 10px 0; color: #2d3748;">Success Response (200)</h5>
+                    <div class="code-block">
+{
+  <span class="json-key">"success"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"data"</span>: {
+    <span class="json-key">"order_id"</span>: <span class="json-number">10045</span>,
+    <span class="json-key">"payment_url"</span>: <span class="json-string">"https://pay.example.com/checkout/10045"</span>,
+    <span class="json-key">"final_price"</span>: <span class="json-number">179.10</span>,
+    <span class="json-key">"currency"</span>: <span class="json-string">"SAR"</span>
+  }
+}
+                    </div>
+                    <div class="info-box">
+                        <h5><i class="fas fa-code"></i> Developer Notes</h5>
+                        <ul>
+                            <li>Cart maps to <code>sale.order</code> in draft; on payment success, confirm order.</li>
+                            <li>For courses, grant enrollment after payment confirmation.</li>
+                            <li>Support promo codes via <code>sale.coupon</code> or custom pricing rules.</li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -1672,35 +2813,13 @@ X-Request-ID: {unique_request_id}
         
 
     <script>
-        // Set current date (check if element exists first)
+        // Set current date (if present)
         const currentDateElement = document.getElementById('currentDate');
         if (currentDateElement) {
             currentDateElement.textContent = new Date().toLocaleDateString();
         }
 
-        // Search functionality removed for PDF conversion
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-
-                // Update active nav link
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Highlight code syntax
+        // Basic syntax highlighting for JSON blocks
         document.querySelectorAll('.code-block').forEach(block => {
             block.innerHTML = block.innerHTML
                 .replace(/"([^"]+)":/g, '<span class="json-key">"$1"</span>:')
@@ -1708,6 +2827,60 @@ X-Request-ID: {unique_request_id}
                 .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
                 .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>');
         });
+
+        // Tab navigation + auto-progress when a tab is completed
+        (function() {
+            const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+            const sections = Array.from(document.querySelectorAll('.section'));
+            const orderIds = navLinks.map(l => l.getAttribute('href').replace('#',''));
+
+            function setActiveTab(id) {
+                // update nav state
+                navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+                // show one section at a time
+                sections.forEach(s => {
+                    s.style.display = (s.id === id) ? 'block' : 'none';
+                });
+                // update hash without scrolling
+                if (history.replaceState) {
+                    history.replaceState(null, '', '#' + id);
+                }
+            }
+
+            // Init: use hash or first tab
+            const initialId = (location.hash || ('#' + orderIds[0])).replace('#','');
+            setActiveTab(initialId);
+
+            // Nav click handling
+            navLinks.forEach(l => {
+                l.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = this.getAttribute('href').replace('#','');
+                    setActiveTab(id);
+                });
+            });
+
+            // Add "Mark as Done" buttons and wire auto-advance
+            orderIds.forEach((id, idx) => {
+                const section = document.getElementById(id);
+                if (!section) return;
+                // Avoid duplicate button if re-run
+                if (section.querySelector('.complete-btn')) return;
+                const btn = document.createElement('button');
+                btn.textContent = 'Mark this tab as Done';
+                btn.className = 'complete-btn';
+                btn.style.cssText = 'margin-top:16px;background:#007acc;color:#fff;border:none;border-radius:6px;padding:10px 14px;cursor:pointer;';
+                section.appendChild(btn);
+                btn.addEventListener('click', () => {
+                    btn.disabled = true;
+                    btn.textContent = 'Completed ✔';
+                    const navLink = navLinks.find(l => l.getAttribute('href') === '#' + id);
+                    if (navLink) navLink.classList.add('completed');
+                    const nextId = orderIds[idx + 1] || orderIds[0];
+                    setActiveTab(nextId);
+                });
+            });
+        })();
     </script>
 
     <!-- Attribution Footer -->
